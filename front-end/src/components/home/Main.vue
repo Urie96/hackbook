@@ -10,6 +10,7 @@
       ></el-input>
     </div>
     <div
+      ref="courseBox"
       v-if="courses.length"
       class="list"
       v-infinite-scroll="loadMore"
@@ -19,8 +20,8 @@
       <div class="list-item" v-for="courseItem of courses" :key="courseItem.id">
         <CourseItem :courseItem="courseItem" />
       </div>
+      <el-backtop target=".list" :right="20" :bottom="20"></el-backtop>
     </div>
-    <el-backtop :right="20" :bottom="20"></el-backtop>
   </div>
 </template>
 
@@ -61,8 +62,8 @@ export default {
             tmp.isSearching = true;
           }
         });
+        this.sortCoursesAndReload();
       }
-      this.sortCoursesAndReload();
     },
     loadMore() {
       this.loadingMore = true;
@@ -82,9 +83,11 @@ export default {
       this.allCourses.sort((a, b) => {
         return level(b) - level(a);
       });
-
       this.courses = [];
       this.loadMore();
+      this.$nextTick(() => {
+        this.$refs.courseBox.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     },
     setFavorites() {
       return this.$axios.get(`/userservice/favorites`).then((data) => {
@@ -104,6 +107,16 @@ export default {
     await this.setFavorites();
     this.sortCoursesAndReload();
     this.loading = false;
+  },
+  activated() {
+    if (this.$refs.courseBox) {
+      const savedPostion = sessionStorage.getItem('saved_position') || 0;
+      this.$refs.courseBox.scrollTo({ top: savedPostion });
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    sessionStorage.setItem('saved_position', this.$refs.courseBox.scrollTop);
+    next();
   },
   components: { CourseItem },
 };

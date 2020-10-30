@@ -5,9 +5,8 @@ const router = express.Router();
 
 router.use(
   '/api',
-  jwtValidator.unless({ path: ['/login', '/courses'], useOriginalUrl: false })
+  jwtValidator.unless({ path: ['/login', '/courses'], useOriginalUrl: false }),
 );
-
 // eslint-disable-next-line no-unused-vars
 router.use((err, _req, res, _next) => {
   res.status(401).json({ error: err.message });

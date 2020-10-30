@@ -21,6 +21,7 @@ const routes = [
     children: [
       {
         path: '',
+        name: 'home',
         component: () => import('../components/home/Main.vue'),
         meta: {
           title: 'hackbook',
@@ -57,10 +58,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition;
-    }
-    return { x: 0, y: 0 };
+    return savedPosition || { x: 0, y: 0 };
   },
 });
 
@@ -68,11 +66,6 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title;
   }
-  // if (to.meta.requireAuthorization && !window.isAuthenticated) {
-  //   next({ name: 'login', query: { redirect: to.path } });
-  // } else {
-  //   next();
-  // }
   next();
 });
 

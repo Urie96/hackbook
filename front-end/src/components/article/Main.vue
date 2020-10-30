@@ -44,6 +44,7 @@ export default {
       loading: true,
       course: {},
       neighbor: {},
+      studyLogInterval: null,
     };
   },
   watch: {
@@ -52,18 +53,37 @@ export default {
     },
   },
   components: { Content, Comment },
+  destroyed() {
+    clearInterval(this.interval);
+    this.loading = false;
+  },
   deactivated() {
+    clearInterval(this.interval);
     this.loading = false;
   },
   methods: {
     addStudyInfo() {
       localStorage.setItem('last_study_course_id', this.course.id);
+      localStorage.setItem(
+        `course_${this.course.id}_last_study_article_id`,
+        this.article.id
+      );
+      localStorage.setItem(
+        `course_${this.course.id}_last_study_section_id`,
+        this.article.section.id
+      );
+      this.interval = setInterval(() => {
+        localStorage.setItem(
+          `article_${this.article.id}_log`,
+          document.scrollingElement.scrollTop
+        );
+      }, 10000);
     },
     async initData() {
       try {
         this.loading = true;
         const data = await this.$axios.get(
-          `articles/${this.id}?_embed=articleContents&_embed=comments&_expand=course`
+          `articles/${this.id}?_embed=articleContents&_embed=comments&_expand=course&_expand=section`
         );
         this.article = data;
         this.content = data.articleContents[0].content;
@@ -75,6 +95,9 @@ export default {
         const index = articles.findIndex((v) => v.id === Number(this.id));
         this.neighbor.left = articles[index - 1];
         this.neighbor.right = articles[index + 1];
+        document.scrollingElement.scrollTo({
+          top: localStorage.getItem(`article_${this.article.id}_log`),
+        });
         this.loading = false;
       } catch (e) {
         this.$message({

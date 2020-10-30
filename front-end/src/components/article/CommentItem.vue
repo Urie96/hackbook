@@ -13,9 +13,8 @@
     <div
       :class="['content', { 'content-spread': isSpread }]"
       @click="isSpread = !isSpread"
-    >
-      {{ comment.content }}
-    </div>
+      v-html="comment.content"
+    ></div>
     <div class="reply" v-for="reply of comment.comments" :key="reply.id">
       {{ reply.nickName }}: {{ reply.content }}
     </div>

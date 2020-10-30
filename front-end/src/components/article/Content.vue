@@ -1,5 +1,6 @@
 <template>
   <article
+    ref="articleContent"
     class="markdown-body"
     id="article-content"
     v-html="content"
@@ -26,8 +27,7 @@ export default {
     init() {
       this.$nextTick(() => {
         hljs.initHighlighting();
-        const content = document.getElementsByClassName('markdown-body')[0];
-        renderMathInElement(content, {
+        renderMathInElement(this.$refs.articleContent, {
           delimiters: [
             { left: '$$', right: '$$', display: true },
             { left: '$', right: '$', display: false },

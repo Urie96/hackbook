@@ -1,7 +1,7 @@
 <template>
   <el-collapse
     accordion
-    v-model="activeNames"
+    v-model="lastSectionId"
     v-loading="loading"
     style="min-height: 200px; padding: 0 1rem"
   >
@@ -19,13 +19,13 @@
         class="lesson-item"
         v-for="article of section.articles"
         :key="article.id"
-        :style="{ color: article.done ? '' : '#999' }"
+        :style="article.done || { color: '#999' }"
         @click="article.done ? turnToArticle(article.id) : void 0"
       >
         <div style="padding-right: 30px">
           {{ article.title }}
         </div>
-        <i :class="article.done ? 'el-icon-video-play' : 'el-icon-lock'"></i>
+        <i :class="getClass(article)"></i>
       </div>
     </el-collapse-item>
   </el-collapse>
@@ -36,14 +36,36 @@ export default {
   data() {
     return {
       loading: true,
-      activeNames: '',
       sections: [],
+      lastArticleId: 0,
+      lastSectionId: 0,
     };
+  },
+  computed: {
+    getClass() {
+      return (article) => {
+        if (article.id === this.lastArticleId) {
+          return 'el-icon-video-pause bold';
+        }
+        if (article.done) {
+          return 'el-icon-video-play';
+        }
+        return 'el-icon-lock';
+      };
+    },
   },
   watch: {
     courseId() {
       this.init();
     },
+  },
+  activated() {
+    this.lastArticleId = Number(
+      localStorage.getItem(`course_${this.courseId}_last_study_article_id`)
+    );
+    this.lastSectionId = Number(
+      localStorage.getItem(`course_${this.courseId}_last_study_section_id`)
+    );
   },
   mounted() {
     this.init();
@@ -55,7 +77,6 @@ export default {
         `courses/${this.courseId}/sections?_embed=articles`
       );
       this.sections = data;
-      this.activeNames = data[0].id;
       this.loading = false;
     },
     turnToArticle(id) {
@@ -87,5 +108,9 @@ i {
   text-overflow: ellipsis;
   overflow: hidden;
   padding: 0.64rem 0 0.507rem;
+}
+.bold {
+  font-weight: bolder;
+  font-size: 20px;
 }
 </style>
