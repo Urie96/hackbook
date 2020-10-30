@@ -1,0 +1,28 @@
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjE3ODI4MjI4ODI3IiwiaWQiOjEsImlhdCI6MTYwMzk1NTM4MCwiZXhwIjoxNjA0MTI4MTgwfQ.DnalNzsJttA-DviyUmEsk8nM7h74AUBalsj2c54GOmQ
+@host = http://localhost:7122/api
+
+###
+// @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "phone": "17828228827",
+    "password": "123445"
+}
+
+###
+GET http://localhost:7122/api/courses/1
+authorization: {{token}}
+
+###
+GET {{host}}/userservice/favorites?courseId=1
+Content-Type: application/json
+authorization: {{token}}
+
+{
+    "courseId":1
+}
+###
+DELETE {{host}}/userservice/favorites/2
+authorization: {{token}}
