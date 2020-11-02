@@ -1,19 +1,17 @@
 const express = require('express');
-const history = require('connect-history-api-fallback');
+const logger = require('morgan');
 const interceptor = require('./interceptor');
 const router = require('./routes');
-const { STATIC_FILE } = require('./constants');
 
 const app = express();
 
+app.use(logger('dev'));
+
 app.use(interceptor);
 
-app.use('/api', router);
+app.use(router);
 
-app.use(history());
-app.use(express.static(STATIC_FILE));
-
-const port = process.env.PORT || 7122;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`JSON Server is running at ${port}`);
 });

@@ -1,5 +1,5 @@
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjE3ODI4MjI4ODI3IiwiaWQiOjEsImlhdCI6MTYwMzk1NTM4MCwiZXhwIjoxNjA0MTI4MTgwfQ.DnalNzsJttA-DviyUmEsk8nM7h74AUBalsj2c54GOmQ
-@host = http://localhost:7122/api
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjE3ODI4MjI4ODI3IiwiaWQiOjEsImlhdCI6MTYwNDI4OTA4NywiZXhwIjoxNjA0NDYxODg3fQ.ihQUGxfnUQEDodMvku0YigFM7jAkSKJWeV4LHQRc39o
+@host = http://localhost:8080
 
 ###
 // @name login
@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:7122/api/courses/1
+GET {{host}}/courses/1
 authorization: {{token}}
 
 ###

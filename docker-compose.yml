@@ -1,0 +1,18 @@
+version: "3.5"
+
+services:
+  hackbook-front:
+    build: ./front-end
+    ports:
+      - "7122:8080"
+    container_name: "hackbook-front"
+    networks:
+      - default
+
+  hackbook-back:
+    build: ./back-end
+    container_name: "hackbook-back"
+    environment:
+      - PORT=8080
+    networks:
+      - default

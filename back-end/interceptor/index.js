@@ -4,7 +4,6 @@ const { generateToken, jwtValidator } = require('./jwt.js');
 const router = express.Router();
 
 router.use(
-  '/api',
   jwtValidator.unless({ path: ['/login', '/courses'], useOriginalUrl: false }),
 );
 // eslint-disable-next-line no-unused-vars
@@ -15,10 +14,13 @@ router.use((err, _req, res, _next) => {
 router.use((req, res, next) => {
   if (req.user) {
     // pass the jwt validate, so refresh token
-    delete req.user.iat;
-    delete req.user.exp;
-    const token = generateToken(req.user);
-    res.setHeader('set-authorization', token);
+    if (new Date() / 1000 - req.user.iat > 2 * 60 * 60) {
+      // avoid refresh frequently
+      delete req.user.iat;
+      delete req.user.exp;
+      const token = generateToken(req.user);
+      res.setHeader('set-authorization', token);
+    }
   }
   next();
 });

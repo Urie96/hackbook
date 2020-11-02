@@ -18,8 +18,6 @@ router.use('/userservice', (req, res, next) => {
   next();
 });
 
-router.use(jsonServer.defaults());
-
 router.use('/userservice', jsonServer.router(USERSERVICE_PATH));
 
 const data = getData();

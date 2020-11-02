@@ -77,6 +77,7 @@ export default {
         `courses/${this.courseId}/sections?_embed=articles`
       );
       this.sections = data;
+      // todo
       this.loading = false;
     },
     turnToArticle(id) {

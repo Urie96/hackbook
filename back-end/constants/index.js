@@ -9,7 +9,6 @@ function getAbsolutePath(relativePath) {
 const constant = {
   BLUE_PATH: getAbsolutePath('data/blue.json'),
   USERSERVICE_PATH: getAbsolutePath('data/userservice-db.json'),
-  STATIC_FILE: getAbsolutePath('../dist'),
 };
 
 module.exports = constant;
