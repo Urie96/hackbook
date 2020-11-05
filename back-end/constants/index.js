@@ -2,7 +2,7 @@ const ssoHost = process.env.SSO;
 const dataDir = process.env.DATA_DIR || '/root/data';
 
 module.exports = {
-  BLUE_PATH: `${dataDir}/blue.json`,
+  BLUE_PATH: `${dataDir}/blue-db.json`,
   USERSERVICE_PATH: `${dataDir}/userservice-db.json`,
   GEEK_PATH: `${dataDir}/geek-db.json`,
   LAGOU_PATH: `${dataDir}/lagou-db.json`,
