@@ -12,7 +12,11 @@ services:
   hackbook-back:
     build: ./back-end
     container_name: "hackbook-back"
+    volumes:
+      - /root/data/hackbook:/root/data
     environment:
       - PORT=8080
+      - SSO=sso.sweetlove.top
+      - JWT_SECRET=Fwet)9243?
     networks:
       - default
