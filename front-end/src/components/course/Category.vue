@@ -31,6 +31,7 @@
   </el-collapse>
 </template>
 <script>
+/*eslint-disable*/
 export default {
   props: ['courseId'],
   data() {
@@ -77,7 +78,9 @@ export default {
         `courses/${this.courseId}/sections?_embed=articles`
       );
       this.sections = data;
-      // todo
+      if (!this.lastSectionId) {
+        this.lastSectionId = this.sections[0].id;
+      }
       this.loading = false;
     },
     turnToArticle(id) {

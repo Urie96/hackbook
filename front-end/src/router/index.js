@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import { Loading } from 'element-ui';
 import NotFound from '../views/NotFound.vue';
 import Courses from '../views/Courses.vue';
 
@@ -13,7 +14,8 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () => import('../components/home/Main.vue'),
+        component: () =>
+          import(/* webpackPrefetch: true */ '../components/home/Main.vue'),
         meta: {
           title: 'hackbook',
         },
@@ -22,7 +24,8 @@ const routes = [
         path: 'course/:id',
         name: 'course',
         props: true,
-        component: () => import('../components/course/Main.vue'),
+        component: () =>
+          import(/* webpackPrefetch: true */ '../components/course/Main.vue'),
         meta: {
           requireAuth: true,
         },
@@ -31,7 +34,8 @@ const routes = [
         path: 'article/:id',
         name: 'article',
         props: true,
-        component: () => import('../components/article/Main.vue'),
+        component: () =>
+          import(/* webpackPrefetch: true */ '../components/article/Main.vue'),
         meta: {
           requireAuth: true,
         },
@@ -65,12 +69,14 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requireAuth && !window.isAuthenticated) {
     try {
+      const load = Loading.service();
       await window.$axios.get('/login', {
         params: {
           loginReturnTo: to.fullPath,
         },
       });
       window.isAuthenticated = true;
+      load.close();
     } catch (err) {
       if (err.response && err.response.status === 401) {
         window.location.href = err.response.data.redirect;

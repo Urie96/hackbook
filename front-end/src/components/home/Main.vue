@@ -15,7 +15,6 @@
       class="list"
       v-infinite-scroll="loadMore"
       infinite-scroll-disabled="disableLoad"
-      style="overflow: auto; height: 100vh"
     >
       <div class="list-item" v-for="courseItem of courses" :key="courseItem.id">
         <CourseItem :courseItem="courseItem" />
@@ -86,7 +85,7 @@ export default {
       this.courses = [];
       this.loadMore();
       this.$nextTick(() => {
-        this.$refs.courseBox.scrollTo({ top: 0, behavior: 'smooth' });
+        this.$refs.courseBox.scrollTo({ top: 0 });
       });
     },
     setFavorites() {
@@ -130,6 +129,11 @@ export default {
 .list::-webkit-scrollbar {
   display: none;
 }
+.list {
+  padding-top: 50px;
+  overflow: auto;
+  height: calc(100vh - 70px);
+}
 .fix {
   padding: 10px;
   background-color: white;
@@ -138,9 +142,5 @@ export default {
   right: 0;
   left: 0;
   top: 0;
-}
-.main {
-  padding-top: 50px;
-  /* padding: 3px 0 3px 0; */
 }
 </style>

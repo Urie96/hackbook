@@ -49,12 +49,14 @@ function verifyCode(code) {
 }
 
 module.exports = (req, res) => {
+  if (req.user) {
+    succeedLogin(req, res, false);
+    return;
+  }
   res.cookie('loginReturnTo', req.query.loginReturnTo, {
     maxAge: 1000 * 3600 * 24,
   });
-  if (req.user) {
-    succeedLogin(req, res, false);
-  } else if (req.query.code) {
+  if (req.query.code) {
     verifyCode(req.query.code)
       .then((data) => {
         req.user = data;
@@ -64,6 +66,7 @@ module.exports = (req, res) => {
         failLogin(err, req, res);
       });
   } else {
-    failLogin(null, req, res);
+    const err = new Error('query code required');
+    failLogin(err, req, res);
   }
 };

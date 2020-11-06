@@ -10,17 +10,30 @@ function normalize(db, data) {
     delete course.courseIntroduce;
     intro.courseId = course.id;
     db.courseIntroduces.push(intro);
-    const sections = course.sections || {};
+    const sections = Object.values(course.sections || {});
     delete course.sections;
     course.articleCount = 0;
     course.done = true;
-    Object.values(sections).forEach((section) => {
+    // sort sections
+    sections.forEach((s) => {
+      // console.log(s.articles);
+      s.sortTag = Math.max(
+        Object.values(s.articles || {}).map((a) => Date.parse(a.publishDate))
+      );
+    });
+    sections.sort((a, b) => a.sortTag - b.sortTag);
+    sections.forEach((section) => {
+      delete section.sortTag;
       db.sections.push(section);
       section.id = db.sections.length;
       section.courseId = course.id;
-      const articles = section.articles || {};
+      const articles = Object.values(section.articles || {});
       delete section.articles;
-      Object.values(articles).forEach((article) => {
+      // sort articles
+      articles.sort(
+        (a, b) => Date.parse(a.publishDate) - Date.parse(b.publishDate)
+      );
+      articles.forEach((article) => {
         db.articles.push(article);
         course.articleCount++;
         article.id = db.articles.length;

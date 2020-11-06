@@ -15,9 +15,12 @@
       @click="isSpread = !isSpread"
       v-html="comment.content"
     ></div>
-    <div class="reply" v-for="reply of comment.comments" :key="reply.id">
-      {{ reply.nickName }}: {{ reply.content }}
-    </div>
+    <div
+      class="reply"
+      v-for="reply of comment.comments"
+      :key="reply.id"
+      v-html="reply.nickName + ': ' + reply.content"
+    ></div>
     <div class="icon">
       <div><i class="el-icon-chat-dot-square"></i><span> </span></div>
       <div>
