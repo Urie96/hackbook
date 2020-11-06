@@ -18,9 +18,7 @@ const newAxios = axios.create({
 
 newAxios.interceptors.request.use(
   (config) => {
-    const res = config;
-    res.headers.authorization = localStorage.getItem('hackbookAuthorization');
-    return res;
+    return config;
   },
   (error) => {
     // Do something with request error
@@ -31,19 +29,16 @@ newAxios.interceptors.request.use(
 // Add a response interceptor
 newAxios.interceptors.response.use(
   (res) => {
-    const resAuthorization = res.headers['set-authorization'];
-    if (resAuthorization) {
-      localStorage.setItem('hackbookAuthorization', resAuthorization);
-    }
     if (res.data.error) {
       return Promise.reject(new Error(res.data.error));
+    }
+    if (res.config.url.startsWith('/userservice')) {
+      window.isAuthenticated = true;
     }
     return res.data;
   },
   (error) => {
-    if (error.response.status === 401) {
-      window.location.href = `/login?redirect=${window.location.pathname}`;
-    }
+    console.log(error.message);
     return Promise.reject(error);
   }
 );
@@ -56,6 +51,7 @@ Plugin.install = (vue) => {
       },
     },
   });
+  window.$axios = newAxios;
 };
 
 Vue.use(Plugin);

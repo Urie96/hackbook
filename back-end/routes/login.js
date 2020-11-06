@@ -14,10 +14,10 @@ function succeedLogin(req, res, shouldRedirect) {
   }
 }
 
-function failLogin(req, res) {
+function failLogin(error, req, res) {
   const url = new URL(SSO_AUTH);
-  url.searchParams.set('redirectTo', req.fullUrl);
-  res.redirect(url);
+  url.searchParams.set('redirectTo', process.env.SSO_RETURN);
+  res.status(401).send({ error, redirect: url });
 }
 
 function httpGet(url) {
@@ -49,6 +49,9 @@ function verifyCode(code) {
 }
 
 module.exports = (req, res) => {
+  res.cookie('loginReturnTo', req.query.loginReturnTo, {
+    maxAge: 1000 * 3600 * 24,
+  });
   if (req.user) {
     succeedLogin(req, res, false);
   } else if (req.query.code) {
@@ -57,10 +60,10 @@ module.exports = (req, res) => {
         req.user = data;
         succeedLogin(req, res, true);
       })
-      .catch(() => {
-        failLogin(req, res);
+      .catch((err) => {
+        failLogin(err, req, res);
       });
   } else {
-    failLogin(req, res);
+    failLogin(null, req, res);
   }
 };

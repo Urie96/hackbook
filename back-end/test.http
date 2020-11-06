@@ -3,8 +3,7 @@
 
 ###
 // @name login
-GET {{host}}/login?code=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMSIsInBob25lIjoiMTc4MjgyMjg4MjciLCJwYXNzd29yZCI6InlvdWxpbmcifSwiaWF0IjoxNjA0NDc0ODczLCJleHAiOjE2MDQ0NzU0NzN9.dcKdu3KKVTJNZSLBnv36DpOw6D3M9pzNaOgljq4D2BM
-
+GET http://localhost:8081/api/login
 
 ###
 GET {{host}}/courses/1

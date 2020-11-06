@@ -90,15 +90,20 @@ export default {
       });
     },
     setFavorites() {
-      return this.$axios.get(`/userservice/favorites`).then((data) => {
-        const set = new Set(data.map((v) => v.courseId));
-        this.allCourses
-          .filter((v) => set.has(v.id))
-          .forEach((c) => {
-            const tmp = c;
-            tmp.isFavorite = true;
-          });
-      });
+      return this.$axios
+        .get(`/userservice/favorites`)
+        .then((data) => {
+          const set = new Set(data.map((v) => v.courseId));
+          this.allCourses
+            .filter((v) => set.has(v.id))
+            .forEach((c) => {
+              const tmp = c;
+              tmp.isFavorite = true;
+            });
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     },
   },
   async mounted() {

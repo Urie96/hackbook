@@ -7,15 +7,6 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/login',
-    name: 'login',
-    meta: {
-      title: '欢迎登录',
-    },
-    component: () => import('../components/login/Main.vue'),
-    props: (route) => ({ redirect: route.query.redirect }),
-  },
-  {
     path: '/',
     component: Courses,
     children: [
@@ -32,12 +23,18 @@ const routes = [
         name: 'course',
         props: true,
         component: () => import('../components/course/Main.vue'),
+        meta: {
+          requireAuth: true,
+        },
       },
       {
         path: 'article/:id',
         name: 'article',
         props: true,
         component: () => import('../components/article/Main.vue'),
+        meta: {
+          requireAuth: true,
+        },
       },
     ],
   },
@@ -46,6 +43,9 @@ const routes = [
     name: 'blue',
     props: true,
     component: () => import('../components/blue/Main.vue'),
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: '*',
@@ -62,7 +62,22 @@ const router = new VueRouter({
   },
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requireAuth && !window.isAuthenticated) {
+    try {
+      await window.$axios.get('/login', {
+        params: {
+          loginReturnTo: to.fullPath,
+        },
+      });
+      window.isAuthenticated = true;
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        window.location.href = err.response.data.redirect;
+        return;
+      }
+    }
+  }
   if (to.meta.title) {
     document.title = to.meta.title;
   }

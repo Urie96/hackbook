@@ -10,3 +10,9 @@ new Vue({
   router,
   render: (h) => h(App),
 }).$mount('#app');
+
+// window.$axios.get('/login').then((data) => {
+//   if (data.message === 'success') {
+//     window.isAuthenticated = true;
+//   }
+// });

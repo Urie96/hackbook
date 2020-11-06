@@ -25,11 +25,12 @@ function interceptor(req, res, next) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function errorHandler(err, req, res, _next) {
-  res.cookie('loginReturnTo', req.fullUrl, {
-    maxAge: 1000 * 3600 * 24,
-  });
-  res.redirect('/login');
+function errorHandler(error, req, res, _next) {
+  res.status(401).send({ error });
+  // res.cookie('loginReturnTo', req.fullUrl, {
+  //   maxAge: 1000 * 3600 * 24,
+  // });
+  // res.redirect('/login');
 }
 
 module.exports = compose(userParser, interceptor, errorHandler);

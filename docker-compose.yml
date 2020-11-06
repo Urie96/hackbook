@@ -16,8 +16,9 @@ services:
       - /root/data/hackbook:/root/data
     environment:
       - PORT=8080
-      - SSO=sso.sweetlove.top
+      - SSO=http://sso.sweetlove.top
       - JWT_SECRET=Fwet)9243?
       - DATA_DIR=/root/data
+      - SSO_RETURN=http://book.sweetlove.top/api/login
     networks:
       - default
