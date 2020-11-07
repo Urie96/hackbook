@@ -36,28 +36,28 @@ export default {
           const dom = document.createElement('video');
           dom.setAttribute('class', 'video-js');
           document.getElementById('player').append(dom);
-          // window._player = Videojs(dom, {
-          //   controls: true,
-          //   fluid: true,
-          //   playbackRates: [1, 1.25, 1.5, 1.75, 2],
-          //   sources: [
-          //     // {
-          //     //   src: '//vjs.zencdn.net/v/oceans.mp4',
-          //     //   type: 'video/mp4',
-          //     // },
-          //     {
-          //       src: video,
-          //       type: 'application/x-mpegURL',
-          //     },
-          //   ],
-          // });
-          // this.player.landscapeFullscreen({
-          //   fullscreen: {
-          //     enterOnRotate: true,
-          //     alwaysInLandscapeMode: true,
-          //     iOS: true,
-          //   },
-          // });
+          window._player = Videojs(dom, {
+            controls: true,
+            fluid: true,
+            playbackRates: [1, 1.25, 1.5, 1.75, 2],
+            sources: [
+              // {
+              //   src: '//vjs.zencdn.net/v/oceans.mp4',
+              //   type: 'video/mp4',
+              // },
+              {
+                src: video,
+                type: 'application/x-mpegURL',
+              },
+            ],
+          });
+          this.player.landscapeFullscreen({
+            fullscreen: {
+              enterOnRotate: true,
+              alwaysInLandscapeMode: true,
+              iOS: true,
+            },
+          });
         }
       });
     },
