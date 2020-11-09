@@ -15,7 +15,16 @@ function userParser(req, res, next) {
 }
 
 function needAuth(url) {
-  return url.includes('blue') || url.includes('articleContent');
+  if (url.includes('blue')) {
+    return true;
+  }
+  if (url.includes('articleContent')) {
+    return true;
+  }
+  if (url.includes('userservice')) {
+    return true;
+  }
+  return false;
 }
 
 function interceptor(req, res, next) {

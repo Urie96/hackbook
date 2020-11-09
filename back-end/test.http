@@ -20,3 +20,13 @@ authorization: {{token}}
 ###
 DELETE {{host}}/userservice/favorites/2
 authorization: {{token}}
+###
+GET http://www.sweetlove.top
+Accept: */*
+Host: www.sweetlove.top
+
+###
+GET https://book.sweetlove.top/api/login?code=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMSIsInBob25lIjoiMTc4MjgyMjg4MjciLCJwYXNzd29yZCI6InlvdWxpbmcifSwiaWF0IjoxNjA0OTEyNDUzLCJleHAiOjE2MDQ5MTMwNTN9.7rruEH5owtMryt5ubNWCdW4WVXexWynrkniXoUOudes
+
+###
+GET http://myserver:7122/api/login

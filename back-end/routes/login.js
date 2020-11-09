@@ -24,7 +24,11 @@ function httpGet(url) {
   return new Promise((resolve, reject) => {
     const req = http.get(url, (res) => {
       res.on('data', (body) => {
-        resolve(JSON.parse(body.toString()));
+        try {
+          resolve(JSON.parse(body.toString()));
+        } catch (err) {
+          reject(err);
+        }
       });
       res.on('error', (err) => {
         reject(err);
