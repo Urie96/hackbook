@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const https = require('https');
 const http = require('http');
 const { SSO_VERIFYCODE, SSO_AUTH, JWT_SECRET } = require('../constants');
 
@@ -21,8 +22,9 @@ function failLogin(error, req, res) {
 }
 
 function httpGet(url) {
+  const httpModule = new URL(url).protocol === 'https:' ? https : http;
   return new Promise((resolve, reject) => {
-    const req = http.get(url, (res) => {
+    const req = httpModule.get(url, (res) => {
       res.on('data', (body) => {
         try {
           resolve(JSON.parse(body.toString()));
