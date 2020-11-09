@@ -23,10 +23,17 @@ module.exports = {
     open: true,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:7122',
+        target: 'http://localhost:7122',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '',
+        },
+      },
+      '/linguo': {
+        target: 'http://linguomm.xyz',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/linguo': '',
         },
       },
     },

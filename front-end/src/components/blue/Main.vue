@@ -9,7 +9,7 @@
 <script>
 /* eslint-disable */
 import 'video.js/dist/video-js.min.css';
-// import Videojs from 'video.js/core';
+import Videojs from 'video.js';
 import 'videojs-landscape-fullscreen';
 
 export default {
@@ -51,7 +51,7 @@ export default {
               },
             ],
           });
-          this.player.landscapeFullscreen({
+          window._player.landscapeFullscreen({
             fullscreen: {
               enterOnRotate: true,
               alwaysInLandscapeMode: true,

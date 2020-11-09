@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import { Loading } from 'element-ui';
 import NotFound from '../views/NotFound.vue';
 import Courses from '../views/Courses.vue';
+import Blue from '../views/Blue.vue';
 
 Vue.use(VueRouter);
 
@@ -17,7 +18,7 @@ const routes = [
         component: () =>
           import(/* webpackPrefetch: true */ '../components/home/Main.vue'),
         meta: {
-          title: 'hackbook',
+          title: 'Hackbook',
         },
       },
       {
@@ -27,7 +28,7 @@ const routes = [
         component: () =>
           import(/* webpackPrefetch: true */ '../components/course/Main.vue'),
         meta: {
-          requireAuth: true,
+          title: '',
         },
       },
       {
@@ -43,13 +44,34 @@ const routes = [
     ],
   },
   {
-    path: '/blue/:id',
-    name: 'blue',
-    props: true,
-    component: () => import('../components/blue/Main.vue'),
-    meta: {
-      requireAuth: true,
-    },
+    path: '/blue',
+    component: Blue,
+    children: [
+      {
+        path: 'new',
+        component: () => import('../components/blue/NewPublish.vue'),
+        meta: {
+          requireAuth: true,
+        },
+      },
+      {
+        path: 'new/:url',
+        props: true,
+        name: 'newImgs',
+        component: () => import('../components/blue/NewPublishImgs.vue'),
+        meta: {
+          requireAuth: true,
+        },
+      },
+      {
+        path: ':id',
+        props: true,
+        component: () => import('../components/blue/Main.vue'),
+        meta: {
+          requireAuth: true,
+        },
+      },
+    ],
   },
   {
     path: '*',

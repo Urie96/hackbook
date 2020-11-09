@@ -14,13 +14,17 @@ function userParser(req, res, next) {
   }
 }
 
+function needAuth(url) {
+  return url.includes('blue') || url.includes('articleContent');
+}
+
 function interceptor(req, res, next) {
-  if (req.url.startsWith('/courses') || req.url.startsWith('/login')) {
+  if (req.user) {
     next();
-  } else if (req.user) {
-    next();
-  } else {
+  } else if (needAuth(req.url)) {
     next(new Error('Unauthorized'));
+  } else {
+    next();
   }
 }
 

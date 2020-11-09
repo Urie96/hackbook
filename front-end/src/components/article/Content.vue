@@ -7,11 +7,9 @@
   ></article>
 </template>
 <script>
+/* eslint-disable */
 import 'github-markdown-css';
-import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github-gist.css';
-import hljs from 'highlight.js';
-import renderMathInElement from 'katex/contrib/auto-render/auto-render';
 
 export default {
   props: ['content'],
@@ -26,15 +24,29 @@ export default {
   methods: {
     init() {
       this.$nextTick(() => {
-        hljs.initHighlighting();
-        renderMathInElement(this.$refs.articleContent, {
-          delimiters: [
-            { left: '$$', right: '$$', display: true },
-            { left: '$', right: '$', display: false },
-            { left: '\\(', right: '\\)', display: false },
-            { left: '\\[', right: '\\]', display: true },
-          ],
-        });
+        const codeDom = document.querySelectorAll('.markdown-body pre code');
+        if (codeDom.length > 0) {
+          import('highlight.js').then(({ default: hljs }) => {
+            codeDom.forEach((v) => {
+              hljs.highlightBlock(v);
+            });
+          });
+        }
+        if (/\$.+?\$/.test(this.content)) {
+          import('katex/dist/katex.min.css');
+          import('katex/contrib/auto-render/auto-render').then(
+            ({ default: renderMathInElement }) => {
+              renderMathInElement(this.$refs.articleContent, {
+                delimiters: [
+                  { left: '$$', right: '$$', display: true },
+                  { left: '$', right: '$', display: false },
+                  { left: '\\(', right: '\\)', display: false },
+                  { left: '\\[', right: '\\]', display: true },
+                ],
+              });
+            }
+          );
+        }
       });
     },
   },
