@@ -1,11 +1,8 @@
-import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { Loading } from 'element-ui';
 import NotFound from '../views/NotFound.vue';
 import Courses from '../views/Courses.vue';
 import Blue from '../views/Blue.vue';
-
-Vue.use(VueRouter);
 
 const routes = [
   {
