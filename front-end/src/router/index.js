@@ -13,7 +13,7 @@ const routes = [
         path: '',
         name: 'home',
         component: () =>
-          import(/* webpackPrefetch: true */ '../components/home/Main.vue'),
+          import(/* webpackChunkName: 'home' */ '../components/home/Main.vue'),
         meta: {
           title: 'Hackbook',
         },
@@ -23,7 +23,9 @@ const routes = [
         name: 'course',
         props: true,
         component: () =>
-          import(/* webpackPrefetch: true */ '../components/course/Main.vue'),
+          import(
+            /* webpackChunkName: 'course' */ '../components/course/Main.vue'
+          ),
         meta: {
           title: '',
         },
@@ -33,7 +35,9 @@ const routes = [
         name: 'article',
         props: true,
         component: () =>
-          import(/* webpackPrefetch: true */ '../components/article/Main.vue'),
+          import(
+            /* webpackChunkName: 'article' */ '../components/article/Main.vue'
+          ),
         meta: {
           requireAuth: true,
         },
