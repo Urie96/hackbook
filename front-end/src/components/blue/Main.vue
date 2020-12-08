@@ -8,9 +8,11 @@
 </template>
 <script>
 /* eslint-disable */
-import 'video.js/dist/video-js.min.css';
-import Videojs from 'video.js';
-import 'videojs-landscape-fullscreen';
+window.remote.loadStyle(
+  'https://cdn.jsdelivr.net/npm/video.js@7.10.2/dist/video-js.min.css'
+);
+// import 'video.js/dist/video-js.min.css';
+// import Videojs from 'video.js';
 
 export default {
   props: ['id'],
@@ -33,31 +35,40 @@ export default {
       this.$axios.get(`/blues/${id}`).then(({ imgs, video }) => {
         this.imgs = imgs;
         if (video) {
-          const dom = document.createElement('video');
-          dom.setAttribute('class', 'video-js');
-          document.getElementById('player').append(dom);
-          window._player = Videojs(dom, {
-            controls: true,
-            fluid: true,
-            playbackRates: [1, 1.25, 1.5, 1.75, 2],
-            sources: [
-              // {
-              //   src: '//vjs.zencdn.net/v/oceans.mp4',
-              //   type: 'video/mp4',
-              // },
-              {
-                src: video,
-                type: 'application/x-mpegURL',
-              },
-            ],
-          });
-          window._player.landscapeFullscreen({
-            fullscreen: {
-              enterOnRotate: true,
-              alwaysInLandscapeMode: true,
-              iOS: true,
-            },
-          });
+          window.remote
+            .loadScript(
+              'https://cdn.jsdelivr.net/npm/video.js@7.10.2/dist/video.min.js',
+              'videojs'
+            )
+            .then((Videojs) => {
+              const dom = document.createElement('video');
+              dom.setAttribute('class', 'video-js');
+              document.getElementById('player').append(dom);
+              window._player = Videojs(dom, {
+                controls: true,
+                fluid: true,
+                playbackRates: [1, 1.25, 1.5, 1.75, 2],
+                sources: [
+                  // {
+                  //   src: '//vjs.zencdn.net/v/oceans.mp4',
+                  //   type: 'video/mp4',
+                  // },
+                  {
+                    src: video,
+                    type: 'application/x-mpegURL',
+                  },
+                ],
+              });
+              // import('videojs-landscape-fullscreen').then(() => {
+              //   window._player.landscapeFullscreen({
+              //     fullscreen: {
+              //       enterOnRotate: true,
+              //       alwaysInLandscapeMode: true,
+              //       iOS: true,
+              //     },
+              //   });
+              // });
+            });
         }
       });
     },

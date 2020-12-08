@@ -1,8 +1,10 @@
 const CompressionPlugin = require('compression-webpack-plugin');
 
+/** @type {import('@vue/cli-service').ProjectOptions} */
 module.exports = {
   productionSourceMap: false,
   configureWebpack: (config) => {
+    /** @type {import('webpack').Configuration} */
     const cfg = {};
     if (process.env.NODE_ENV === 'production') {
       cfg.plugins = [
@@ -11,17 +13,19 @@ module.exports = {
           threshold: 1024 * 10,
           // deleteOriginalAssets: true,
         }),
+        // new require('webpack-bundle-analyzer').BundleAnalyzerPlugin(),
       ];
     }
-    cfg.externals = {
-      vue: 'Vue',
-      'vue-router': 'VueRouter',
-      'element-ui': 'ELEMENT',
-      axios: 'axios',
-    };
+    cfg.externals = [
+      {
+        vue: 'Vue',
+        'vue-router': 'VueRouter',
+        'element-ui': 'ELEMENT',
+      },
+    ];
     return cfg;
   },
-
+  lintOnSave: false,
   devServer: {
     host: 'localhost',
     port: 8081,
