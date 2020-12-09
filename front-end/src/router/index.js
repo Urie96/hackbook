@@ -1,8 +1,10 @@
 import VueRouter from 'vue-router';
-import { Loading } from 'element-ui';
 import NotFound from '../views/NotFound.vue';
 import Courses from '../views/Courses.vue';
 import Blue from '../views/Blue.vue';
+import CourseHome from '../components/home/Main.vue';
+import CourseId from '../components/course/Main.vue';
+import ArticleId from '../components/article/Main.vue';
 
 const routes = [
   {
@@ -12,8 +14,7 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () =>
-          import(/* webpackChunkName: 'home' */ '../components/home/Main.vue'),
+        component: CourseHome,
         meta: {
           title: 'Hackbook',
         },
@@ -22,10 +23,7 @@ const routes = [
         path: 'course/:id',
         name: 'course',
         props: true,
-        component: () =>
-          import(
-            /* webpackChunkName: 'course' */ '../components/course/Main.vue'
-          ),
+        component: CourseId,
         meta: {
           title: '',
         },
@@ -34,10 +32,7 @@ const routes = [
         path: 'article/:id',
         name: 'article',
         props: true,
-        component: () =>
-          import(
-            /* webpackChunkName: 'article' */ '../components/article/Main.vue'
-          ),
+        component: ArticleId,
         meta: {
           requireAuth: true,
         },
@@ -50,7 +45,10 @@ const routes = [
     children: [
       {
         path: 'new',
-        component: () => import('../components/blue/NewPublish.vue'),
+        component: () =>
+          import(
+            /* webpackChunkName: 'bl' */ '../components/blue/NewPublish.vue'
+          ),
         meta: {
           requireAuth: true,
         },
@@ -59,7 +57,10 @@ const routes = [
         path: 'new/:url',
         props: true,
         name: 'newImgs',
-        component: () => import('../components/blue/NewPublishImgs.vue'),
+        component: () =>
+          import(
+            /* webpackChunkName: 'bl' */ '../components/blue/NewPublishImgs.vue'
+          ),
         meta: {
           requireAuth: true,
         },
@@ -67,7 +68,8 @@ const routes = [
       {
         path: ':id',
         props: true,
-        component: () => import('../components/blue/Main.vue'),
+        component: () =>
+          import(/* webpackChunkName: 'bl' */ '../components/blue/Main.vue'),
         meta: {
           requireAuth: true,
         },
@@ -92,7 +94,7 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requireAuth && !window.isAuthenticated) {
     try {
-      const load = Loading.service();
+      const load = window.ELEMENT.Loading.service();
       await window.$axios.get('/login', {
         params: {
           loginReturnTo: to.fullPath,

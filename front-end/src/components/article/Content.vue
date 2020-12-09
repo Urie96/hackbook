@@ -8,8 +8,11 @@
 </template>
 <script>
 /* eslint-disable */
-import 'github-markdown-css';
+// import 'github-markdown-css';
 // import 'highlight.js/styles/github-gist.css';
+window.remote.loadStyle(
+  'https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.css'
+);
 
 export default {
   props: ['content'],

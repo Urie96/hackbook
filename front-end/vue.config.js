@@ -3,7 +3,12 @@ const CompressionPlugin = require('compression-webpack-plugin');
 /** @type {import('@vue/cli-service').ProjectOptions} */
 module.exports = {
   productionSourceMap: false,
+  chainWebpack: (config) => {
+    config.plugins.delete('prefetch').delete('preload');
+  },
   configureWebpack: (config) => {
+    // console.log(config.plugins[0]);
+    // delete confi
     /** @type {import('webpack').Configuration} */
     const cfg = {};
     if (process.env.NODE_ENV === 'production') {
@@ -21,11 +26,11 @@ module.exports = {
         vue: 'Vue',
         'vue-router': 'VueRouter',
         'element-ui': 'ELEMENT',
+        axios: 'axios',
       },
     ];
     return cfg;
   },
-  lintOnSave: false,
   devServer: {
     host: 'localhost',
     port: 8081,
