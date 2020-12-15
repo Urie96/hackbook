@@ -1,10 +1,5 @@
 <template>
-  <article
-    ref="articleContent"
-    class="markdown-body"
-    id="article-content"
-    v-html="content"
-  ></article>
+  <article ref="articleContent" id="article-content"></article>
 </template>
 <script>
 /* eslint-disable */
@@ -14,7 +9,59 @@ window.remote.loadStyle(
   'https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.css'
 );
 
-export default {
+/** @param {HTMLElement} dom */
+async function renderMath(dom) {
+  if (!/\$.+?\$/.test(dom.innerText)) {
+    return;
+  }
+  window.remote.loadStyle(
+    'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css'
+  );
+  await window.remote.loadScript(
+    'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js',
+    'katex'
+  );
+  await window.remote.loadScript(
+    'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js',
+    'renderMathInElement'
+  );
+  const option = {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+      { left: '\\[', right: '\\]', display: true },
+    ],
+  };
+  renderMathInElement(dom, option);
+}
+
+async function highlight(dom) {
+  const codeDom = dom.querySelectorAll('pre code');
+  if (codeDom.length > 0) {
+    await window.remote.loadScript(
+      'https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@10.4.1/highlight.min.js',
+      'hljs'
+    );
+    codeDom.forEach((v) => hljs.highlightBlock(v));
+  }
+}
+
+/** @this {import('vue').default} */
+function init() {
+  this.$refs.articleContent.innerHTML = this.content.replace(
+    /\${2}[\w\W]+?\${2}/g,
+    (match) => match.replace(/<[^>]+>/g, '')
+  );
+  this.$nextTick().then(() => {
+    const articleDom = this.$refs.articleContent;
+    renderMath(articleDom);
+    highlight(articleDom);
+  });
+}
+
+/** @type {import('vue').ComponentOptions} */
+const exp = {
   props: ['content'],
   watch: {
     content() {
@@ -25,53 +72,20 @@ export default {
     this.init();
   },
   methods: {
-    init() {
-      this.$nextTick(() => {
-        const codeDom = document.querySelectorAll('.markdown-body pre code');
-        if (codeDom.length > 0) {
-          // import('highlight.js').
-          (async () => {
-            await window.remote.loadScript(
-              'https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@10.4.1/highlight.min.js',
-              'hljs'
-            );
-            codeDom.forEach((v) => hljs.highlightBlock(v));
-          })();
-        }
-        if (/\$.+?\$/.test(this.content)) {
-          // import('katex/dist/katex.min.css');
-
-          (async () => {
-            window.remote.loadStyle(
-              'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css'
-            );
-            await window.remote.loadScript(
-              'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js',
-              'katex'
-            );
-            await window.remote.loadScript(
-              'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js',
-              'renderMathInElement'
-            );
-            renderMathInElement(this.$refs.articleContent, {
-              delimiters: [
-                { left: '$$', right: '$$', display: true },
-                { left: '$', right: '$', display: false },
-                { left: '\\(', right: '\\)', display: false },
-                { left: '\\[', right: '\\]', display: true },
-              ],
-            });
-          })();
-          // import(
-          //   'katex/contrib/auto-render/auto-render'
-          // ).then(({ default: renderMathInElement }) => {});
-        }
-      });
-    },
+    init,
   },
 };
+
+export default exp;
 </script>
 <style >
+#article-content code {
+  background-color: #f6f8fa;
+  border-radius: 5px;
+}
+#article-content img {
+  max-width: 100%;
+}
 #article-content {
   margin-top: 20px;
 }
