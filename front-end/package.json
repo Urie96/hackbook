@@ -28,6 +28,7 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
     "video.js": "^7.10.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "workbox-webpack-plugin": "^6.0.2"
   }
 }
