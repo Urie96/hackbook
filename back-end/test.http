@@ -1,32 +1,22 @@
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjE3ODI4MjI4ODI3IiwiaWQiOjEsImlhdCI6MTYwNDI4OTA4NywiZXhwIjoxNjA0NDYxODg3fQ.ihQUGxfnUQEDodMvku0YigFM7jAkSKJWeV4LHQRc39o
-@host = http://localhost:8080
+@token = token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMSIsInBob25lIjoiMTc4MjgyMjg4MjciLCJwYXNzd29yZCI6InlvdWxpbmcifSwiaWF0IjoxNjA5MzAyMDMxLCJleHAiOjE2MDk0NzQ4MzF9.b9BzNLItsSV38uL9NPRtvmw05ri5JGbN00fq4nCKezg
+@host = http://localhost:7122
+
+GET {{host}}/userservice/dislike
+Cookie: {{token}}
+
 
 ###
-// @name login
-GET http://localhost:8081/api/login
 
-###
-GET {{host}}/courses/1
-authorization: {{token}}
-
-###
-GET {{host}}/userservice/favorites?courseId=1
-Content-Type: application/json
-authorization: {{token}}
+POST {{host}}/userservice/dislike
+Cookie: {{token}}
+Content-Type: application/json;charset=UTF-8
 
 {
-    "courseId":1
+    "courseId":20
 }
-###
-DELETE {{host}}/userservice/favorites/2
-authorization: {{token}}
-###
-GET http://www.sweetlove.top
-Accept: */*
-Host: www.sweetlove.top
 
 ###
-GET https://book.sweetlove.top/api/login?code=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMSIsInBob25lIjoiMTc4MjgyMjg4MjciLCJwYXNzd29yZCI6InlvdWxpbmcifSwiaWF0IjoxNjA0OTEyNDUzLCJleHAiOjE2MDQ5MTMwNTN9.7rruEH5owtMryt5ubNWCdW4WVXexWynrkniXoUOudes
 
-###
-GET http://myserver:7122/api/login
+DELETE {{host}}/userservice/dislike
+Cookie: {{token}}
+

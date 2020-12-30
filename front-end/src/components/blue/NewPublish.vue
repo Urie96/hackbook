@@ -1,20 +1,19 @@
 <template>
   <div class="main">
-    <el-card
+    <div
       v-for="(item, i) in items"
       :key="i"
       :body-style="{ padding: '0px' }"
-      @click.native="turnTo(item.href)"
+      @click="turnTo(item.href)"
     >
       <img :src="item.imgsrc" class="image" />
       <div style="padding: 14px">
         <span>{{ item.title }}</span>
       </div>
-    </el-card>
+    </div>
   </div>
 </template>
 <script>
-import cheerio from 'cheerio';
 import axios from 'axios';
 
 export default {
@@ -24,20 +23,21 @@ export default {
     };
   },
   async mounted() {
-    const { data } = await axios.get('/', { baseURL: '/linguo' });
-    const $ = cheerio.load(data);
-    $('.update_area_content ul li').each((i, ele) => {
-      const $ele = $(ele);
-      const item = {};
-      item.title = $ele.find('.case_info').text();
-      const [, href] = $ele
-        .find('a')
-        .attr('href')
-        .match(/\/([^/]+)$/);
-      item.href = href;
-      item.imgsrc = $ele.find('img').attr('data-original');
-      this.items.push(item);
-    });
+    const { data } = await axios.get('/linguo');
+    console.log(data);
+    // const $ = cheerio.load(data);
+    // $('.update_area_content ul li').each((i, ele) => {
+    //   const $ele = $(ele);
+    //   const item = {};
+    //   item.title = $ele.find('.case_info').text();
+    //   const [, href] = $ele
+    //     .find('a')
+    //     .attr('href')
+    //     .match(/\/([^/]+)$/);
+    //   item.href = href;
+    //   item.imgsrc = $ele.find('img').attr('data-original');
+    //   this.items.push(item);
+    // });
   },
   methods: {
     turnTo(url) {

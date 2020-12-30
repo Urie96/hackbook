@@ -7,83 +7,61 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
-window.remote.loadStyle(
-  'https://cdn.jsdelivr.net/npm/video.js@7.10.2/dist/video-js.min.css'
-);
-// import 'video.js/dist/video-js.min.css';
-// import Videojs from 'video.js';
+import { ref, watch, toRef, onDeactivated } from 'vue';
+import { useRouter } from 'vue-router';
+import { loadStyle } from '@/utils/';
+import { getBlueById } from '@/api/';
+
+loadStyle('https://cdn.jsdelivr.net/npm/video.js@7.10.2/dist/video-js.min.css');
 
 export default {
   props: ['id'],
-  data() {
-    return {
-      imgs: [],
+  setup(props) {
+    const id = toRef(props, 'id');
+    const imgs = ref([]);
+    const router = useRouter();
+
+    let player = null;
+    const distroyPlayer = () => {
+      if (player) player.dispose();
     };
-  },
-  watch: {
-    id() {
-      this.init();
-    },
-  },
-  methods: {
-    init() {
-      const id = this.id;
-      if (window._player) {
-        window._player.dispose();
+
+    const init = async () => {
+      distroyPlayer();
+      const data = await getBlueById(id.value);
+      imgs.value = data.imgs;
+      if (!data.video) {
+        return;
       }
-      this.$axios.get(`/blues/${id}`).then(({ imgs, video }) => {
-        this.imgs = imgs;
-        if (video) {
-          window.remote
-            .loadScript(
-              'https://cdn.jsdelivr.net/npm/video.js@7.10.2/dist/video.min.js',
-              'videojs'
-            )
-            .then((Videojs) => {
-              const dom = document.createElement('video');
-              dom.setAttribute('class', 'video-js');
-              document.getElementById('player').append(dom);
-              window._player = Videojs(dom, {
-                controls: true,
-                fluid: true,
-                playbackRates: [1, 1.25, 1.5, 1.75, 2],
-                sources: [
-                  // {
-                  //   src: '//vjs.zencdn.net/v/oceans.mp4',
-                  //   type: 'video/mp4',
-                  // },
-                  {
-                    src: video,
-                    type: 'application/x-mpegURL',
-                  },
-                ],
-              });
-              // import('videojs-landscape-fullscreen').then(() => {
-              //   window._player.landscapeFullscreen({
-              //     fullscreen: {
-              //       enterOnRotate: true,
-              //       alwaysInLandscapeMode: true,
-              //       iOS: true,
-              //     },
-              //   });
-              // });
-            });
-        }
+      const { default: Videojs } = await import('video.js');
+      const dom = document.createElement('video');
+      dom.setAttribute('class', 'video-js');
+      document.getElementById('player').append(dom);
+      player = Videojs(dom, {
+        controls: true,
+        fluid: true,
+        playbackRates: [1, 1.25, 1.5, 1.75, 2],
+        sources: [
+          {
+            src: data.video,
+            type: 'application/x-mpegURL',
+          },
+        ],
       });
-    },
-    next() {
-      const nextId = Number(this.id) + 1;
-      this.$router.push(`/blue/${nextId}`);
-    },
-  },
-  mounted() {
-    this.init();
-  },
-  beforeDestroy() {
-    if (window._player) {
-      window._player.dispose();
-    }
+    };
+
+    init();
+
+    watch(id, init);
+
+    onDeactivated(distroyPlayer);
+
+    const next = () => {
+      const nextId = Number(id.value) + 1;
+      router.push(`/blue/${nextId}`);
+    };
+
+    return { imgs, next };
   },
 };
 </script>

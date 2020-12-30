@@ -1,38 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#4fc1ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="msapplication-TileImage" content="/favicon.svg">
+  <meta name="msapplication-TileColor" content="#000000">
   <title>HackBook</title>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => { navigator.serviceWorker.register('/service-worker.js'); });
     }
   </script>
+  <link rel="icon" href="/favicon.svg">
   <link rel="shortcut icon" href="/favicon.svg">
   <link rel="manifest" href="/manifest.json">
   <link rel="apple-touch-icon" href="/favicon.svg">
   <link rel="mask-icon" href="/favicon.svg" color="#4fc1ff">
-  <meta name="theme-color" content="#4fc1ff">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="msapplication-TileImage" content="/favicon.svg">
-  <meta name="msapplication-TileColor" content="#000000">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.14.1/lib/theme-chalk/index.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/solid.min.css">
 </head>
 
 <body>
   <noscript>
-    <strong>We're sorry but Hackbook doesn't work properly without JavaScript enabled. Please enable it to
-      continue.</strong>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong>
   </noscript>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue-router@3.4.9/dist/vue-router.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/element-ui@2.14.1/lib/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios@0.21.0/dist/axios.min.js"></script>
-
   <div id="app"></div>
   <!-- built files will be auto injected -->
 </body>

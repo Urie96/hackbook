@@ -1,54 +1,27 @@
 <template>
-  <div
-    v-loading="loading"
-    style="min-height: 200px"
-    v-html="content"
-    id="introduce"
-  ></div>
+  <div v-html="content" id="introduce"></div>
 </template>
 <script>
+import { ref } from 'vue';
+import { getIntroduceByCourseId } from '@/api/';
+
 export default {
   props: ['courseId'],
-  data() {
-    return {
-      loading: true,
-      content: '',
+  setup(props) {
+    const content = ref('');
+
+    const loadIntroduce = async () => {
+      const [data] = await getIntroduceByCourseId(props.courseId);
+      content.value = data && data.content;
     };
-  },
-  watch: {
-    courseId() {
-      this.init();
-    },
-  },
-  mounted() {
-    this.init();
-  },
-  methods: {
-    async init() {
-      try {
-        this.loading = true;
-        const [data] = await this.$axios.get(
-          `courses/${this.courseId}/courseIntroduces?_limit=1`
-        );
-        if (data) {
-          this.content = data.content;
-        }
-      } catch (e) {
-        this.$message({
-          message: e,
-          type: 'error',
-        });
-      }
-    },
-    turnToArticle(id) {
-      this.$router.push({
-        name: 'article',
-        params: { id },
-      });
-    },
+
+    loadIntroduce();
+
+    return { content };
   },
 };
 </script>
+
 <style>
 #introduce {
   text-align: left;

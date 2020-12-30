@@ -5,17 +5,23 @@ const { GenerateSW } = require('workbox-webpack-plugin')
 module.exports = {
   productionSourceMap: false,
   chainWebpack: (config) => {
-    config.plugins.delete('prefetch').delete('preload');
+    // config.plugins.delete('prefetch').delete('preload');
   },
   configureWebpack: (config) => {
-    // console.log(config.plugins[0]);
-    // delete confi
     /** @type {import('webpack').Configuration} */
-    const cfg = {};
+    const cfg = {
+      externalsType: 'script',
+      externals: [{
+        'highlight.js': ['https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@10.4.1/highlight.min.js', 'hljs'],
+        'katex': ['https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js', 'katex'],
+        'katex/contrib/auto-render/auto-render.js': ['https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js', 'renderMathInElement'],
+        'video.js': ['https://cdn.jsdelivr.net/npm/video.js@7.10.2/dist/video.min.js', 'videojs'],
+      }]
+    }
     if (process.env.NODE_ENV === 'production') {
       cfg.plugins = [
         new CompressionPlugin({
-          test: /\.(js|css)$/,
+          test: /\.(js|css|html|svg)$/,
           threshold: 1024 * 10,
           // deleteOriginalAssets: true,
         }),
@@ -26,7 +32,7 @@ module.exports = {
           exclude: [/\.gz$/],
           runtimeCaching: [
             {
-              urlPattern: /https:\/\/(cdn|static001\.geekbang\.org|s0\.lgstatic\.com)/,
+              urlPattern: /https:\/\/(img-cdn|cdn|static001\.geekbang\.org|s0\.lgstatic\.com)/,
               handler: 'CacheFirst',
               options: {
                 cacheableResponse: {
@@ -35,7 +41,7 @@ module.exports = {
               }
             },
             {
-              urlPattern: /https?:\/\/[^/]+\/api\/(?!login)/,
+              urlPattern: /https?:\/\/[^/]+\/api\/(?!login)(?!userservice)/,
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheableResponse: {
@@ -45,22 +51,14 @@ module.exports = {
             }
           ]
         }),
-        // new require('webpack-bundle-analyzer').BundleAnalyzerPlugin(),
+        new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
       ];
     }
-    cfg.externals = [
-      {
-        vue: 'Vue',
-        'vue-router': 'VueRouter',
-        'element-ui': 'ELEMENT',
-        axios: 'axios',
-      },
-    ];
-    return cfg;
+    return cfg
   },
   devServer: {
     host: 'localhost',
-    port: 8081,
+    port: 8080,
     https: false,
     open: true,
     proxy: {
@@ -72,7 +70,7 @@ module.exports = {
         },
       },
       '/linguo': {
-        target: 'http://linguomm.xyz',
+        target: 'https://linguomm.xyz',
         changeOrigin: true,
         pathRewrite: {
           '^/linguo': '',
