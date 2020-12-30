@@ -1,9 +1,11 @@
 const { generateSW } = require('workbox-build');
 
+const swDest = './dist/sw.js'
+
 generateSW({
     // mode: 'development',
+    swDest,
     globDirectory: './dist/',
-    swDest: './dist/sw.js',
     cleanupOutdatedCaches: true,
     clientsClaim: true,
     skipWaiting: true,
