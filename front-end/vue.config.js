@@ -1,5 +1,4 @@
 const CompressionPlugin = require('compression-webpack-plugin');
-const { GenerateSW } = require('workbox-webpack-plugin')
 
 /** @type {import('@vue/cli-service').ProjectOptions} */
 module.exports = {
@@ -24,32 +23,6 @@ module.exports = {
           test: /\.(js|css|html|svg)$/,
           threshold: 1024 * 10,
           // deleteOriginalAssets: true,
-        }),
-        new GenerateSW({
-          // mode: 'development',
-          clientsClaim: true,
-          skipWaiting: true,
-          exclude: [/\.gz$/],
-          runtimeCaching: [
-            {
-              urlPattern: /https:\/\/(img-cdn|cdn|static001\.geekbang\.org|s0\.lgstatic\.com)/,
-              handler: 'CacheFirst',
-              options: {
-                cacheableResponse: {
-                  statuses: [0, 200]
-                }
-              }
-            },
-            {
-              urlPattern: /https?:\/\/[^/]+\/api\/(?!login)(?!userservice)/,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheableResponse: {
-                  statuses: [200]
-                }
-              }
-            }
-          ]
         }),
         // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
       ];

@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "vue-cli-service build && npm run build-sw",
+    "lint": "vue-cli-service lint",
+    "build-sw": "node workbox-build.js"
   },
   "dependencies": {
     "@vant/touch-emulator": "^1.2.0",
@@ -27,6 +28,6 @@
     "stylus": "^0.54.8",
     "stylus-loader": "^4.3.1",
     "webpack-bundle-analyzer": "^4.3.0",
-    "workbox-webpack-plugin": "^6.0.2"
+    "workbox-build": "^6.0.2"
   }
 }
