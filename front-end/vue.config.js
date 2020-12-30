@@ -51,7 +51,7 @@ module.exports = {
             }
           ]
         }),
-        new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
+        // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
       ];
     }
     return cfg
