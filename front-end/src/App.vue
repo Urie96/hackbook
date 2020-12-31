@@ -57,4 +57,12 @@
     transform: rotate(1turn);
   }
 }
+
+.hover-big {
+  transition: all 0.5s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
 </style>
