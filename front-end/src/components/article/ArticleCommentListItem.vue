@@ -2,7 +2,7 @@
   <div>
     <div class="head">
       <div>
-        <i :style="avatorStyle" class="fas fa-user-circle"></i>
+        <i :style="avatorStyle" class="iconfont icon-xxhdpiShape"></i>
       </div>
       <div style="margin-left: 0.5rem">
         <div class="name">{{ nickName }}</div>
@@ -21,8 +21,10 @@
       v-html="reply.nickName + ': ' + reply.content"
     ></div>
     <div class="icon">
-      <div><i class="fas fa-comment-dots"></i></div>
-      <div><i class="fas fa-star"> </i> {{ Number(likeCount) || '' }}</div>
+      <div><i class="iconfont icon-comment"></i></div>
+      <div>
+        <i class="iconfont icon-star"> </i> {{ Number(likeCount) || '' }}
+      </div>
     </div>
     <divider />
   </div>
@@ -51,26 +53,26 @@ export default {
 .head {
   display: flex;
   align-items: center;
-  padding-bottom: 10px;
+  padding-bottom: 0.6rem;
 }
 
 .name {
   color: #353535;
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: bold;
-  height: 20px;
-  line-height: 20px;
+  height: 1.25rem;
+  line-height: 1.25rem;
 }
 
 .date {
   color: #888;
-  font-size: 14px;
+  font-size: 0.9rem;
   line-height: 1;
 }
 
 .content {
   color: #4c4c4c;
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 400;
   white-space: normal;
   word-break: break-all;
@@ -90,36 +92,32 @@ export default {
 .reply {
   margin: 0;
   color: #888;
-  font-size: 14px;
+  font-size: 0.9rem;
   font-weight: 400;
   white-space: normal;
   word-break: break-all;
   background: #f6f7fb;
-  border-radius: 10px;
-  padding: 18px;
+  border-radius: 0.6rem;
+  padding: 1.1rem;
   overflow-x: scroll;
 }
 
 .icon {
   display: flex;
-  margin-top: 8px;
+  margin-top: 0.5rem;
   align-items: center;
-  font-size: 12px;
   color: #888;
-  padding-left: 0 10px;
+  padding-left: 0 0.6rem;
   justify-content: flex-end;
+  font-size: 1rem;
 
-  &>div {
-    padding-left: 1.3rem;
-    font-size: 1rem;
+  &>:first-child i {
+    color: var(--theme);
   }
-}
 
-.fa-star {
-  color: #f1c40f;
-}
-
-.fa-comment-dots {
-  color: var(--theme);
+  &>:last-child i {
+    color: #f1c40f;
+    padding-left: 1.3rem;
+  }
 }
 </style>

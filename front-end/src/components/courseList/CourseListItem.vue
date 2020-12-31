@@ -5,9 +5,13 @@
         <div class="flex-y">
           <div>
             <div class="title oneline">{{ title }}</div>
-            <i class="fas fa-heart" v-if="isFavorite" @click="cancelLike"></i>
             <i
-              class="fas fa-heart-broken"
+              class="iconfont icon-heart heart"
+              v-if="isFavorite"
+              @click="cancelLike"
+            ></i>
+            <i
+              class="iconfont icon-heartbroken heart-broken"
               v-if="isDislike"
               @click="cancelDislike"
             ></i>
@@ -21,9 +25,9 @@
             <span class="price">{{ price }}</span>
             <span class="buy-count">{{ purchasedCount }}</span>
             <span class="study">
-              <i class="fas fa-circle-notch fa-spin" v-if="!done"> </i>
+              <i class="iconfont icon-Loading spin" v-if="!done"></i>
               {{ lastStudy ? '继续学习' : '学习' }}
-              <i class="fas fa-chevron-right"></i>
+              <i class="iconfont icon-arrow-right"></i>
             </span>
           </div>
         </div>
@@ -37,7 +41,7 @@
           type="warning"
           @click="like"
         >
-          <i class="fas fa-thumbs-up"></i>
+          <i class="iconfont icon-good"></i>
         </van-button>
         <van-button
           :disabled="buttonIsDisable"
@@ -45,7 +49,7 @@
           type="danger"
           @click="dislike"
         >
-          <i class="fas fa-thumbs-down"></i>
+          <i class="iconfont icon-bad_fill"></i>
         </van-button>
       </div>
     </template>
@@ -123,6 +127,7 @@ export default {
 
 <style lang="stylus" scoped>
 $heart = var(--heart);
+$heart-broken = #ff6666b3;
 $price = var(--price);
 
 .buy-count {
@@ -139,8 +144,13 @@ $price = var(--price);
   line-height: 1.5rem;
 }
 
-.fa-heart, .fa-heart-broken {
+.heart {
   color: $heart;
+  line-height: 1.5rem;
+}
+
+.heart-broken {
+  color: $heart-broken;
   line-height: 1.5rem;
 }
 

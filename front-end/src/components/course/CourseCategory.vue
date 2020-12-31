@@ -51,9 +51,9 @@ export default {
 
     const getClass = (article) => {
       if (article.id === lastArticleId.value)
-        return 'fas fa-pause-circle c-warn';
-      if (article.done) return 'fas fa-play-circle c-primary';
-      return 'fas fa-lock';
+        return 'iconfont icon-pause c-warn';
+      if (article.done) return 'iconfont icon-play c-primary';
+      return 'iconfont icon-lock';
     };
 
     const loadSections = async () => {

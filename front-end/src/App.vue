@@ -35,4 +35,26 @@
 .van-cell__title {
   overflow: hidden;
 }
+
+.iconfont {
+  font-size: inherit;
+}
+
+.spin {
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
 </style>
