@@ -1,18 +1,17 @@
 <template>
   <article ref="content" id="article-content"></article>
-  <u-loading :loading="loading" />
 </template>
 
 <script>
 import { ref, onDeactivated, onMounted } from 'vue';
 import { getArticleContentById } from '@/api/';
-import { highlightIfNeed, renderMathIfNeed } from '@/utils/';
+import { highlightIfNeed, renderMathIfNeed, Loading } from '@/utils/';
 
 export default {
   props: ['id'],
   setup(props) {
     const content = ref(null);
-    const loading = ref(true);
+    Loading.pop();
 
     let interval;
     const storageKey = `article_${props.id}_log`;
@@ -39,20 +38,20 @@ export default {
       content.value.innerHTML = data.replace(/\${2}[\w\W]+?\${2}/g, (match) =>
         match.replace(/<[^>]+>/g, '')
       );
-      loading.value = false;
     };
 
     onDeactivated(stopSavingStudyInfo);
 
     onMounted(async () => {
       await loadContent();
+      Loading.clear();
       turnToLastStudyPosition();
       savingStudyRecord();
       highlightIfNeed(content.value);
       renderMathIfNeed(content.value);
     });
 
-    return { content, loading };
+    return { content };
   },
 };
 </script>

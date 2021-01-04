@@ -1,4 +1,10 @@
 import { Notify as VanNotify } from 'vant';
+import Message from './message'
+import Loading from './loading';
+
+export const Notify = VanNotify
+
+export { Message, Loading, }
 
 export const loadStyle = (url) => {
     const links = document.getElementsByTagName('link');
@@ -57,5 +63,3 @@ export const renderMathIfNeed = async (dom) => {
     };
     renderMathInElement(dom, option);
 }
-
-export const Notify = VanNotify

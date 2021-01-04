@@ -62,7 +62,19 @@
   transition: all 0.5s;
 
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.2) !important;
   }
+}
+
+.hover-color {
+  transition: all 0.5s;
+
+  &:hover {
+    color: var(--theme) !important;
+  }
+}
+
+.van-nav-bar .van-icon, .van-nav-bar__text {
+  color: var(--theme);
 }
 </style>

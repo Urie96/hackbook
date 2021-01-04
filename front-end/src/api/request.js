@@ -31,9 +31,9 @@ client.interceptors.response.use(
         if (res.data.error) {
             return Promise.reject(new Error(res.data.error));
         }
-        if (res.config.url.startsWith('/userservice')) {
-            window.isAuthenticated = true;
-        }
+        // if (res.config.url.startsWith('/userservice')) {
+        //     window.isAuthenticated = true;
+        // }
         return res.data;
     },
     (error) => {

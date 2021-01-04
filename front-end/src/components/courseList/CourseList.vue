@@ -12,7 +12,6 @@
       />
     </div>
   </transition-group>
-  <u-loading :loading="loading" />
   <back-to-top />
 </template>
 
@@ -21,18 +20,20 @@ import { reactive, ref, computed, onActivated } from 'vue';
 import { getAllCourses } from '@/api';
 import CourseListItem from './CourseListItem';
 import { courseIsFavorite, courseIsDislike } from '@/utils/favorite';
+import { Loading } from '@/utils/';
 
 export default {
   setup() {
     const courses = ref([]);
     const searchQuery = ref('');
-    const loading = ref(true);
     const lastStudyCourseId = ref(-1);
+
+    Loading.pop();
 
     const loadCourse = async () => {
       const data = await getAllCourses();
       courses.value = reactive(data);
-      loading.value = false;
+      Loading.clear();
     };
 
     const refreshLastStudyCourse = () => {
@@ -67,7 +68,6 @@ export default {
     loadCourse();
     return {
       lastStudyCourseId,
-      loading,
       sortedCourses,
       searchQuery,
       CourseListItem,

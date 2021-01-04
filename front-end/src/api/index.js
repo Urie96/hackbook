@@ -102,7 +102,6 @@ export const login = (loginReturnTo) => {
             params: { loginReturnTo },
         })
         .then(() => {
-            window.isAuthenticated = true;
             return true
         })
         .catch((err) => {
