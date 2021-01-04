@@ -22,7 +22,7 @@ export default {
 
     const reload = () => {
       location.reload(true);
-      this.updateEvent = null;
+      enable.value = false;
     };
 
     addEventListener('sw-updated', () => {
