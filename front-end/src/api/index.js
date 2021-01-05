@@ -7,7 +7,9 @@ const MustNonNull = (...arg) => {
     })
 }
 
-export const getAllCourses = () => request.get(`/courses`);
+const allCourses = request.get('/courses')
+
+export const getAllCourses = () => allCourses
 
 export const getUserDislike = () => request.get(`/userservice/dislike`)
 
@@ -57,13 +59,13 @@ export const deleteDislike = async (courseId) => {
 
 export const getCourseById = (courseId) => {
     MustNonNull(courseId)
-    return request.get(`/courses/${courseId}`)
+    return allCourses.then(courses => courses.find(course => course.id === Number(courseId)))
 }
 
 export const getIntroduceByCourseId = (courseId) => {
     MustNonNull(courseId)
     return request.get(
-        `courses/${courseId}/courseIntroduces?_limit=1`
+        `courseIntroduces?courseId=${courseId}&_limit=1`
     )
 }
 

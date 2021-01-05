@@ -6,8 +6,6 @@ import Blue from '@/views/Blue'
 import CourseList from '@/components/courseList/CourseList'
 import Course from '@/components/course/Course'
 import Article from '@/components/article/Article'
-import { Loading } from '@/utils/';
-
 
 /** @type {Array<import('vue-router'.RouteRecordNormalized)>}  */
 const routes = [
@@ -87,7 +85,6 @@ const router = createRouter({
 let isAuthenticated = false
 
 router.beforeEach(async (to) => {
-  Loading.pop()
   if (to.meta.requireAuth && !isAuthenticated) {
     const success = await login(to.fullPath)
     if (success) {
@@ -100,9 +97,5 @@ router.beforeEach(async (to) => {
     document.title = to.meta.title;
   }
 });
-
-router.afterEach(() => {
-  Loading.clear()
-})
 
 export default router

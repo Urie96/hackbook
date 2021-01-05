@@ -11,10 +11,10 @@ generateSW({
     skipWaiting: true,
     sourcemap: false,
     dontCacheBustURLsMatching: /\.\w{8}\.[^.]*$/,
-    globPatterns: ['**.{js,css,html,svg,json}', '**/**.{js,css}'],
+    globPatterns: ['**\/*.{js,css,html,png,jpg,jpeg,gif,svg,woff,woff2,eot,ttf,otf}'],
     runtimeCaching: [
         {
-            urlPattern: /https:\/\/(cdn)/,
+            urlPattern: /https:\/\/(cdn|at)/,
             handler: 'CacheFirst',
             options: {
                 cacheableResponse: {
