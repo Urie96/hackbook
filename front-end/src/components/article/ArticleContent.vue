@@ -11,7 +11,6 @@ export default {
   props: ['id'],
   setup(props) {
     const content = ref(null);
-    Loading.pop();
 
     let interval;
     const storageKey = `article_${props.id}_log`;
@@ -43,6 +42,7 @@ export default {
     onDeactivated(stopSavingStudyInfo);
 
     onMounted(async () => {
+      Loading.pop();
       await loadContent();
       Loading.clear();
       turnToLastStudyPosition();

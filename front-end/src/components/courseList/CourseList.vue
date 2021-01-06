@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { reactive, ref, computed, onActivated } from 'vue';
+import { reactive, ref, computed, onActivated, onMounted } from 'vue';
 import { getAllCourses } from '@/api';
 import CourseListItem from './CourseListItem';
 import { courseIsFavorite, courseIsDislike } from '@/utils/favorite';
@@ -28,12 +28,9 @@ export default {
     const searchQuery = ref('');
     const lastStudyCourseId = ref(-1);
 
-    Loading.pop();
-
     const loadCourse = async () => {
       const data = await getAllCourses();
       courses.value = reactive(data);
-      Loading.clear();
     };
 
     const refreshLastStudyCourse = () => {
@@ -65,7 +62,12 @@ export default {
 
     onActivated(refreshLastStudyCourse);
 
-    loadCourse();
+    onMounted(async () => {
+      Loading.pop();
+      await loadCourse();
+      Loading.clear();
+    });
+
     return {
       lastStudyCourseId,
       sortedCourses,
