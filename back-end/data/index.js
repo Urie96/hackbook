@@ -2,10 +2,10 @@
 const fs = require('fs');
 const { LAGOU_PATH, GEEK_PATH, BLUE_PATH } = require('../constants');
 
-function normalize(db, data) {
+function normalize(db, data, offset) {
   Object.values(data).forEach((course) => {
     db.courses.push(course);
-    course.id = db.courses.length;
+    course.id = db.courses.length + offset;
     const intro = course.courseIntroduce || {};
     delete course.courseIntroduce;
     intro.courseId = course.id;
@@ -77,10 +77,10 @@ module.exports = () => {
     comments: [],
     blues: [],
   };
-  const data1 = JSON.parse(fs.readFileSync(GEEK_PATH).toString());
-  normalize(db, data1);
-  const data2 = JSON.parse(fs.readFileSync(LAGOU_PATH).toString());
-  normalize(db, data2);
+  const data1 = JSON.parse(fs.readFileSync(LAGOU_PATH).toString());
+  normalize(db, data1, 0);
+  const data2 = JSON.parse(fs.readFileSync(GEEK_PATH).toString());
+  normalize(db, data2, 1000);
   const data3 = JSON.parse(fs.readFileSync(BLUE_PATH).toString());
   db.blues = data3;
   for (let prop in db) {
