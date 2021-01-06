@@ -35,6 +35,8 @@ export default {
   --code-color: #476582;
   --pre-code-color: #353535;
   --mask-color: #888;
+  --box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
+  --background-color: #fff;
 }
 
 .c-primary {

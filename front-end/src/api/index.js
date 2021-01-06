@@ -7,9 +7,12 @@ const MustNonNull = (...arg) => {
     })
 }
 
-const allCourses = request.get('/courses')
+const lazyLoad = (func) => {
+    let res = null
+    return () => res ? res : res = func()
+}
 
-export const getAllCourses = () => allCourses
+export const getAllCourses = lazyLoad(() => request.get('/courses'))
 
 export const getUserDislike = () => request.get(`/userservice/dislike`)
 
@@ -59,7 +62,7 @@ export const deleteDislike = async (courseId) => {
 
 export const getCourseById = (courseId) => {
     MustNonNull(courseId)
-    return allCourses.then(courses => courses.find(course => course.id === Number(courseId)))
+    return getAllCourses().then(courses => courses.find(course => course.id === Number(courseId)))
 }
 
 export const getIntroduceByCourseId = (courseId) => {

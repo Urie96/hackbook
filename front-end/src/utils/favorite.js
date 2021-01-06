@@ -20,12 +20,19 @@ const loadDislike = async () => {
     })
 }
 
-loadFavorite()
-loadDislike()
+const initOnce = (() => {
+    let first = true
+    return async () => {
+        if (first) {
+            first = false
+            await Promise.all([loadFavorite(), loadDislike()])
+        }
+    }
+})()
 
-export const courseIsFavorite = (id) => favset.has(id.value || id)
+export const courseIsFavorite = (id) => initOnce() && favset.has(id.value || id)
 
-export const courseIsDislike = (id) => disset.has(id.value || id)
+export const courseIsDislike = (id) => initOnce() && disset.has(id.value || id)
 
 export const likeCourse = async (id) => {
     favset.add(id.value || id);

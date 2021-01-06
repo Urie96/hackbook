@@ -39,17 +39,22 @@ export default {
   right: 1em;
   bottom: 1em;
   padding: 1em;
-  border: 1px solid var(--theme);
-  border-radius: 3px;
-  background: #fff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   text-align: center;
   z-index: 3;
+  border-radius: 0.25rem;
+  box-shadow: var(--box-shadow);
+  color: var(--text-color);
+  background: var(--background-color);
 }
 
 .sw-update-popup > button {
   margin-top: 0.5em;
   padding: 0.25em 2em;
+  background: var(--theme);
+  border-radius: 0.25rem;
+  color: #fff;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  border: none;
 }
 
 .sw-update-popup-enter-active,
