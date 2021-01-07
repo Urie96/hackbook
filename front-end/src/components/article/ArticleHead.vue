@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { getArticleInfoById } from '@/api/';
 
 export default {
@@ -31,7 +31,10 @@ export default {
       article.value = { ...data.course, ...data };
     };
 
-    loadArticleInfo().then(saveStudyInfo);
+    onMounted(async () => {
+      await loadArticleInfo();
+      saveStudyInfo();
+    });
 
     return { article };
   },

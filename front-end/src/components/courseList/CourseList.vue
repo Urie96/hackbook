@@ -22,6 +22,15 @@ import CourseListItem from './CourseListItem';
 import { courseIsFavorite, courseIsDislike } from '@/utils/favorite';
 import { Loading } from '@/utils/';
 
+Array.prototype.shuffle = function () {
+  let array = this;
+  let len = array.length;
+  for (let i = len - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+};
+
 export default {
   setup() {
     const courses = ref([]);
@@ -30,7 +39,8 @@ export default {
 
     const loadCourse = async () => {
       const data = await getAllCourses();
-      courses.value = reactive(data);
+      data.shuffle();
+      courses.value = data;
     };
 
     const refreshLastStudyCourse = () => {
