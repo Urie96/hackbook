@@ -6,6 +6,8 @@ import router from './router'
 import Tag from "@/components/common/Tag";
 import BackToTop from "@/components/common/BackToTop";
 import Divider from "@/components/common/Divider";
+import SearchBox from "@/components/common/SearchBox";
+import FullScreenButton from "@/components/common/FullScreenButton";
 
 createApp(App)
     .use(Button)
@@ -22,5 +24,7 @@ createApp(App)
     .component('back-to-top', BackToTop)
     .component('tag', Tag)
     .component('divider', Divider)
+    .component('search-box', SearchBox)
+    .component('fullscreen-button', FullScreenButton)
     .use(router)
     .mount('#app')
