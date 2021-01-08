@@ -1,34 +1,25 @@
-function asyncPool(routineCount) {
+module.exports = function asyncPool(routineCount) {
   const todoPool = [];
-  const doingPool = [];
-  let emptyCount = 0;
+  let doingCount = 0;
   function handle() {
+    if (doingCount >= routineCount || todoPool.length <= 0) return;
     const func = todoPool.shift();
-    if (!func) {
-      emptyCount += 1;
-      if (emptyCount < 100) {
-        setTimeout(handle, 200);
-      }
-      return;
-    }
-    const one = func().then(() => {
-      doingPool.splice(doingPool.indexOf(one), 1);
-    });
-    doingPool.push(one);
-    if (doingPool.length >= routineCount) {
-      Promise.race(doingPool).then(handle);
-    } else {
+    func().finally(() => {
+      doingCount--;
       handle();
-    }
+    });
+    doingCount++;
   }
-  handle();
   return {
     todo(func) {
       return new Promise((resolve, reject) => {
-        todoPool.push(() => func().then(resolve).catch(reject));
+        todoPool.push(() =>
+          func()
+            .then(resolve)
+            .catch(reject)
+        );
+        handle();
       });
     },
   };
 }
-
-module.exports = asyncPool;

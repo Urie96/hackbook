@@ -2,10 +2,13 @@ const request = require('superagent');
 const syncDB = require('./db.js');
 const asyncPool = require('./asyncPool.js');
 
+const dbPath = '../back-end/data/lagou-db.json'
+const Cookie = 'gate_login_token=d527dc38cff1ebaa7821b5f9bd6bd93b820e588d9b8aa0eb7db6e00028296c62'
+
 let db = null;
 
 async function saveCourseList() {
-  db = syncDB();
+  db = syncDB(dbPath);
   const res = await get(
     'https://gate.lagou.com/v1/neirong/edu/homepage/getCourseList?deviceSourceCode=2'
   );
@@ -151,10 +154,9 @@ async function freePurchase(courseID) {
 const get = (() => {
   const agent = request.agent().set({
     'x-l-req-header': '{deviceType:1}',
-    cookie:
-      'gate_login_token=d527dc38cff1ebaa7821b5f9bd6bd93b820e588d9b8aa0eb7db6e00028296c62',
+    cookie: Cookie,
   });
-  const { todo } = asyncPool(500);
+  const { todo } = asyncPool(50);
   return async (url) => {
     const sendFunc = () => agent.get(url);
     try {
@@ -175,9 +177,3 @@ const get = (() => {
 })();
 
 saveCourseList();
-
-get(
-  `https://gate.lagou.com/v1/neirong/kaiwu/getCourseLessonDetail?lessonId=4543`
-).then((data) => {
-  console.log(data.text);
-});
