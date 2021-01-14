@@ -1,35 +1,29 @@
 <template>
-  <CourseListHead />
-  <div style="padding-top: 3.6rem">
-    <transition-group name="course-list">
-      <div v-for="courseItem of sortedCourses" :key="courseItem.id">
-        <CourseListItem
-          v-bind="courseItem"
-          :lastStudy="courseItem.id === lastStudyCourseId"
-        />
-      </div>
-    </transition-group>
+  <div>
+    <CourseListHead />
+    <div style="padding-top: 3.6rem">
+      <transition-group name="course-list">
+        <div v-for="courseItem of courses" :key="courseItem.id">
+          <CourseListItem
+            v-bind="courseItem"
+            :lastStudy="courseItem.id === lastStudyCourseId"
+          />
+        </div>
+      </transition-group>
+    </div>
+    <back-to-top />
   </div>
-  <back-to-top />
 </template>
 
-<script>
-import { onActivated, onMounted } from 'vue';
-import CourseListItem from './CourseListItem';
-import CourseListHead from './CourseListHead';
-import { Loading } from '@/utils/';
-import { lastStudyCourseId, loadCourse, sortedCourses } from './courses';
+<script lang="ts">
+import { defineComponent, onActivated, onMounted } from 'vue';
+import CourseListItem from './CourseListItem.vue';
+import CourseListHead from './CourseListHead.vue';
+import { Loading } from '../../utils/';
+import { courses, lastStudyCourseId, loadCourse } from './courses';
 
-Array.prototype.shuffle = function () {
-  let array = this;
-  let len = array.length;
-  for (let i = len - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-};
-
-export default {
+export default defineComponent({
+  components: { CourseListItem, CourseListHead },
   setup() {
     const refreshLastStudyCourse = () => {
       lastStudyCourseId.value = Number(
@@ -47,13 +41,12 @@ export default {
 
     return {
       lastStudyCourseId,
-      sortedCourses,
-      CourseListItem,
-      CourseListHead,
+      courses,
     };
   },
-};
+});
 </script>
+
 <style lang="stylus" scoped>
 .course-list-move {
   transition: transform 0.8s ease;

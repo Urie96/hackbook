@@ -19,11 +19,11 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import './registerServiceWorker';
 
-export default {
-  setup(props) {
+export default defineComponent({
+  setup() {
     const enable = ref(false);
     const message = '发现新内容可用';
 
@@ -37,7 +37,7 @@ export default {
     });
     return { enable, message, reload };
   },
-};
+});
 </script>
 
 <style lang="stylus" scoped>

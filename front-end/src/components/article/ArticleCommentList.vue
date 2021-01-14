@@ -12,15 +12,16 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue';
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
 import { getCommentsByArticleId } from '@/api/';
-import ArticleCommentListItem from './ArticleCommentListItem';
+import ArticleCommentListItem from './ArticleCommentListItem.vue';
 
-export default {
+export default defineComponent({
   props: ['id'],
+  components: { ArticleCommentListItem },
   setup(props) {
-    const comments = ref([]);
+    const comments = ref([] as Comment[]);
 
     const loadComments = async () => {
       const data = await getCommentsByArticleId(props.id);
@@ -29,7 +30,7 @@ export default {
 
     loadComments();
 
-    return { comments, ArticleCommentListItem };
+    return { comments };
   },
-};
+});
 </script>

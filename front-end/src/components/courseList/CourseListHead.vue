@@ -14,26 +14,27 @@
     </div>
   </header>
 </template>
-<script>
-import { ref, watch } from 'vue';
+<script lang="ts">
+import { defineComponent, ref, watch } from 'vue';
 import { searchedCourseIds, courses } from './courses';
 
-const debounce = (fn, delay) => {
-  let timer;
-  return (...args) => {
+const debounce = <T>(fn: (...args: any[]) => T, delay: number) => {
+  let timer: NodeJS.Timeout;
+  return (...args: any[]) => {
     clearTimeout(timer);
     timer = setTimeout(() => fn(...args), delay);
   };
 };
 
-export default {
+export default defineComponent({
   setup() {
     const modelQuery = ref('');
     const placeholder = '';
 
-    const strInclude = (s1, s2) => s1.toLowerCase().includes(s2.toLowerCase());
+    const strInclude = (s1: string, s2: string) =>
+      s1.toLowerCase().includes(s2.toLowerCase());
 
-    const getSearchedCourses = (keyword) =>
+    const getSearchedCourses = (keyword: string) =>
       !keyword
         ? []
         : courses.value.filter(
@@ -41,7 +42,9 @@ export default {
           );
 
     const update = debounce(() => {
-      document.scrollingElement.scrollTo({ top: 0 });
+      if (document.scrollingElement) {
+        document.scrollingElement.scrollTo({ top: 0 });
+      }
       searchedCourseIds.value = getSearchedCourses(modelQuery.value).map(
         (c) => c.id
       );
@@ -51,7 +54,7 @@ export default {
 
     return { modelQuery, placeholder };
   },
-};
+});
 </script>
 
 <style lang="stylus" scoped>

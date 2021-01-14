@@ -58,7 +58,7 @@ $MQMobileNarrow ?= 419px;
     padding: 0 0.5rem 0 2rem;
     outline: none;
     transition: all 0.2s ease;
-    background: #fff url('search.svg') 0.6rem 0.5rem no-repeat;
+    background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='13'%3e%3cg stroke-width='2' stroke='%23aaa' fill='none'%3e%3cpath d='M11.29 11.71l-4-4'/%3e%3ccircle cx='5' cy='5' r='4'/%3e%3c/g%3e%3c/svg%3e") 0.6rem 0.5rem no-repeat;
     background-size: 1rem;
 
     &.focus {

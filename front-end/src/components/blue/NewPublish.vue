@@ -13,10 +13,11 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import axios from 'axios';
 
-export default {
+export default defineComponent({
   data() {
     return {
       items: [],
@@ -40,14 +41,14 @@ export default {
     // });
   },
   methods: {
-    turnTo(url) {
+    turnTo(url: string) {
       this.$router.push({
         name: 'newImgs',
         params: { url },
       });
     },
   },
-};
+});
 </script>
 <style scoped>
 .main {

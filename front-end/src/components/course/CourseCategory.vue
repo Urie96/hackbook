@@ -25,15 +25,20 @@
     </van-collapse-item>
   </van-collapse>
 </template>
-<script>
-import { ref, onActivated } from 'vue';
+<script lang="ts">
+import { defineComponent, ref, onActivated } from 'vue';
 import { useRouter } from 'vue-router';
 import { getCourseCategoryById } from '@/api/';
 
-export default {
-  props: ['courseId'],
+export default defineComponent({
+  props: {
+    courseId: {
+      type: [String, Number],
+      required: true,
+    },
+  },
   setup(props) {
-    const sections = ref([]);
+    const sections = ref([] as Section[]);
     const lastSectionId = ref(0);
     const lastArticleId = ref(0);
 
@@ -49,7 +54,7 @@ export default {
         ) || sections.value[0].id;
     };
 
-    const getClass = (article) => {
+    const getClass = (article: Article) => {
       if (article.id === lastArticleId.value)
         return 'iconfont icon-pause c-warn';
       if (article.done) return 'iconfont icon-play c-primary';
@@ -61,7 +66,7 @@ export default {
       sections.value = data;
     };
 
-    const turnToArticlePage = (article) => {
+    const turnToArticlePage = (article: Article) => {
       if (article.done) {
         router.push({
           name: 'article',
@@ -76,8 +81,9 @@ export default {
 
     return { lastSectionId, sections, turnToArticlePage, getClass };
   },
-};
+});
 </script>
+
 <style lang="stylus" scoped>
 .lesson-item {
   color: #303133;

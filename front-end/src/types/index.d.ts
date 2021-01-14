@@ -1,0 +1,1 @@
+import { ComponentOptionsBase } from 'vue';

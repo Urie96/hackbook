@@ -20,18 +20,14 @@
   </div>
 </template>
 
-<script>
-import CourseIntroduce from './CourseIntroduce';
-import CourseCategory from './CourseCategory';
-import CourseHead from './CourseHead';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import CourseIntroduce from './CourseIntroduce.vue';
+import CourseCategory from './CourseCategory.vue';
+import CourseHead from './CourseHead.vue';
 
-export default {
+export default defineComponent({
   props: ['id'],
   components: { CourseHead, CourseIntroduce, CourseCategory },
-};
+});
 </script>
-<style lang="stylus">
-.van-tab {
-  // border: 1px solid #eeeeee;
-}
-</style>

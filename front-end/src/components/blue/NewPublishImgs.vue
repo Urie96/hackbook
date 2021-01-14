@@ -3,24 +3,17 @@
     <img :src="img" alt="" :key="img" v-for="img of imgs" />
   </div>
 </template>
-<script>
+<script lang="ts">
+import { defineComponent, ref, watch } from 'vue';
 import axios from 'axios';
 
-export default {
+export default defineComponent({
   props: ['url'],
-  data() {
-    return {
-      imgs: [],
-    };
-  },
-  watch: {
-    url() {
-      this.init();
-    },
-  },
-  methods: {
-    async init() {
-      const { data } = await axios.get(this.url, {
+  setup(props) {
+    const imgs = ref([] as string[]);
+
+    const init = async () => {
+      const { data } = await axios.get(props.url, {
         baseURL: '/linguo',
       });
       const prefix = data.match(
@@ -30,13 +23,12 @@ export default {
       for (let i = 1; i < 80; i += 1) {
         tmp.push(`${prefix}${i}.jpg`);
       }
-      this.imgs = tmp;
-    },
+      imgs.value = tmp;
+    };
+
+    watch(props.url, init);
   },
-  mounted() {
-    this.init();
-  },
-};
+});
 </script>
 <style scoped>
 .main {

@@ -1,6 +1,6 @@
 const { generateSW } = require('workbox-build');
 
-const swDest = './dist/sw.js'
+const swDest = './dist/service-worker.js'
 
 generateSW({
     // mode: 'development',

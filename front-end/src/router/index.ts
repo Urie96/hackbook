@@ -1,14 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { login } from '@/api/';
-import Courses from '@/views/Courses'
-import NotFound from '@/views/NotFound'
-import Blue from '@/views/Blue'
-import CourseList from '@/components/courseList/CourseList'
-import Course from '@/components/course/Course'
-import Article from '@/components/article/Article'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { login } from '@/api';
+import Courses from '@/views/Courses.vue';
+import NotFound from '@/views/NotFound.vue';
+import Blue from '@/views/Blue.vue';
+import CourseList from '@/components/courseList/CourseList.vue';
+import Course from '@/components/course/Course.vue';
+import Article from '@/components/article/Article.vue';
 
-/** @type {Array<import('vue-router'.RouteRecordNormalized)>}  */
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: Courses,
@@ -32,7 +31,7 @@ const routes = [
           requireAuth: true,
         },
       },
-    ]
+    ],
   },
   {
     path: '/blue',
@@ -75,22 +74,22 @@ const routes = [
     path: '/:pathMatch(.*)*',
     component: NotFound,
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-let isAuthenticated = false
+let isAuthenticated = false;
 
 router.beforeEach(async (to) => {
   if (to.meta.requireAuth && !isAuthenticated) {
-    const success = await login(to.fullPath)
+    const success = await login(to.fullPath);
     if (success) {
-      isAuthenticated = true
+      isAuthenticated = true;
     } else {
-      return false
+      return false;
     }
   }
   if (to.meta.title) {
@@ -98,4 +97,4 @@ router.beforeEach(async (to) => {
   }
 });
 
-export default router
+export default router;

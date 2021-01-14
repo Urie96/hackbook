@@ -2,33 +2,36 @@
   <article ref="content" id="article-content"></article>
 </template>
 
-<script>
-import { ref, onDeactivated, onMounted } from 'vue';
+<script lang="ts">
+import { defineComponent, ref, onDeactivated, onMounted } from 'vue';
 import { getArticleContentById } from '@/api/';
 import { highlightIfNeed, renderMathIfNeed, Loading } from '@/utils/';
 
-export default {
+export default defineComponent({
   props: ['id'],
   setup(props) {
-    const content = ref(null);
+    const content = ref({} as HTMLElement);
 
-    let interval;
+    let interval: NodeJS.Timeout;
     const storageKey = `article_${props.id}_log`;
 
     const savingStudyRecord = () => {
       const scrollingElement = document.scrollingElement;
-      interval = setInterval(() => {
-        localStorage.setItem(storageKey, scrollingElement.scrollTop);
-      }, 10000);
+      if (scrollingElement) {
+        interval = setInterval(() => {
+          localStorage.setItem(storageKey, String(scrollingElement.scrollTop));
+        }, 10000);
+      }
     };
 
-    const stopSavingStudyInfo = () => {
-      clearInterval(interval);
-    };
+    const stopSavingStudyInfo = () => clearInterval(interval);
 
     const turnToLastStudyPosition = () => {
       const studyPosition = localStorage.getItem(storageKey);
-      document.scrollingElement.scrollTo({ top: studyPosition });
+      const scrollingElement = document.scrollingElement;
+      if (scrollingElement && studyPosition) {
+        scrollingElement.scrollTo({ top: Number(studyPosition) });
+      }
     };
 
     const loadContent = async () => {
@@ -53,7 +56,7 @@ export default {
 
     return { content };
   },
-};
+});
 </script>
 
 <style lang="stylus">

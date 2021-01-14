@@ -1,25 +1,26 @@
 <template>
   <div v-html="content" id="introduce"></div>
 </template>
-<script>
-import { ref } from 'vue';
+
+<script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue';
 import { getIntroduceByCourseId } from '@/api/';
 
-export default {
+export default defineComponent({
   props: ['courseId'],
   setup(props) {
     const content = ref('');
 
     const loadIntroduce = async () => {
-      const [data] = await getIntroduceByCourseId(props.courseId);
+      const data = await getIntroduceByCourseId(props.courseId);
       content.value = data && data.content;
     };
 
-    loadIntroduce();
+    onMounted(loadIntroduce);
 
     return { content };
   },
-};
+});
 </script>
 
 <style>

@@ -30,11 +30,11 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue';
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
 import { getOneColor } from '@/utils/';
 
-export default {
+export default defineComponent({
   props: ['date', 'nickName', 'content', 'comments', 'likeCount'],
   setup() {
     const isSpread = ref(false);
@@ -46,7 +46,7 @@ export default {
 
     return { isSpread, avatorStyle };
   },
-};
+});
 </script>
 
 <style lang="stylus" scoped>

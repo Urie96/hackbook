@@ -56,10 +56,10 @@
   </van-swipe-cell>
 </template>
 
-<script>
-import { computed } from 'vue';
+<script lang="ts">
+import { defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import Card from '../common/Card';
+import Card from '../common/Card.vue';
 import {
   courseIsFavorite,
   likeCourse,
@@ -67,9 +67,9 @@ import {
   courseIsDislike,
   dislikeCourse,
   cancelDislikeCourse,
-} from '@/utils/favorite';
+} from '../../utils/favorite';
 
-export default {
+export default defineComponent({
   props: [
     'image',
     'title',
@@ -83,6 +83,7 @@ export default {
     'favset',
     'lastStudy',
   ],
+  components: { Card },
   setup(props) {
     const router = useRouter();
 
@@ -99,13 +100,13 @@ export default {
       () => courseIsFavorite(props.id) || courseIsDislike(props.id)
     );
     const like = () => likeCourse(props.id);
-    const cancelLike = (event) => {
+    const cancelLike = (event: Event) => {
       event.stopPropagation();
       // event.cancelBubble = true;
       cancelLikeCourse(props.id);
     };
     const dislike = () => dislikeCourse(props.id);
-    const cancelDislike = (event) => {
+    const cancelDislike = (event: Event) => {
       event.stopPropagation();
       cancelDislikeCourse(props.id);
     };
@@ -119,10 +120,9 @@ export default {
       cancelDislike,
       buttonIsDisable,
       routeToThisCourse,
-      Card,
     };
   },
-};
+});
 </script>
 
 <style lang="stylus" scoped>

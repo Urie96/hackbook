@@ -1,15 +1,18 @@
 <template>
   <div class="urie__card">
-    <van-image
-      lazy-load
-      width="5rem"
-      height="6.5rem"
-      fit="cover"
-      :src="$attrs.img"
-    />
+    <van-image lazy-load width="5rem" height="6.5rem" fit="cover" :src="img" />
     <div><slot></slot></div>
   </div>
 </template>
+
+<script>
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  props: ['img'],
+});
+</script>
+
 
 <style lang="stylus" scoped>
 .urie__card {

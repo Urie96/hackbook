@@ -6,22 +6,25 @@
     <div id="player"></div>
   </div>
 </template>
-<script>
-import { ref, watch, toRef, onDeactivated } from 'vue';
+<script lang="ts">
+import { defineComponent, ref, watch, toRefs, onDeactivated } from 'vue';
 import { useRouter } from 'vue-router';
-import { loadStyle } from '@/utils/';
+import { importScript, Script } from '@/utils/';
 import { getBlueById } from '@/api/';
 
-loadStyle('https://cdn.jsdelivr.net/npm/video.js@7.10.2/dist/video-js.min.css');
-
-export default {
-  props: ['id'],
+export default defineComponent({
+  props: {
+    id: {
+      type: [Number, String],
+      required: true,
+    },
+  },
   setup(props) {
-    const id = toRef(props, 'id');
+    const { id } = toRefs(props);
     const imgs = ref([]);
     const router = useRouter();
 
-    let player = null;
+    let player: any = null;
     const distroyPlayer = () => {
       if (player) player.dispose();
     };
@@ -33,10 +36,10 @@ export default {
       if (!data.video) {
         return;
       }
-      const { default: Videojs } = await import('video.js');
+      const Videojs = await importScript(Script.VideoJS);
       const dom = document.createElement('video');
       dom.setAttribute('class', 'video-js');
-      document.getElementById('player').append(dom);
+      document.getElementById('player')!.append(dom);
       player = Videojs(dom, {
         controls: true,
         fluid: true,
@@ -63,7 +66,7 @@ export default {
 
     return { imgs, next };
   },
-};
+});
 </script>
 <style scoped>
 .main {

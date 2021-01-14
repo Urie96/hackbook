@@ -1,11 +1,12 @@
-FROM node:14.15.0-alpine3.12 as builder
-WORKDIR /tmp
-RUN npm config set registry https://registry.npm.taobao.org
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
+# FROM node:14.15.0-alpine3.12 as builder
+# WORKDIR /tmp
+# RUN npm config set registry https://registry.npm.taobao.org
+# COPY package*.json ./
+# RUN npm ci
+# COPY . .
+# RUN npm run build
 
-FROM nginx:1.19.3-alpine as app
-COPY --from=builder /tmp/dist /usr/share/nginx/html
+FROM nginx-brotli:alpine-edge as app
+# COPY --from=builder /tmp/dist /usr/share/nginx/html
+COPY ./dist /usr/share/nginx/html
 COPY hackbook-nginx.conf /etc/nginx/conf.d/

@@ -18,27 +18,30 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue';
-import NavBar from '../common/NavBar';
-import Card from '../common/Card';
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import NavBar from '@/components/common/NavBar.vue';
+import Card from '@/components/common/Card.vue';
 import { getCourseById } from '@/api/';
 
-export default {
+export default defineComponent({
   props: ['courseId'],
+  components: { Card, NavBar },
   setup(props) {
-    const course = ref({});
+    const course = ref({} as Course);
 
     const loadCourse = async () => {
       const data = await getCourseById(props.courseId);
-      course.value = data;
+      if (data) {
+        course.value = data;
+      }
     };
 
     loadCourse();
 
-    return { course, NavBar, Card };
+    return { course };
   },
-};
+});
 </script>
 
 <style lang="stylus" scoped>

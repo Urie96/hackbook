@@ -7,22 +7,25 @@
   </div>
 </template>
 
-<script>
-import { ref, onMounted } from 'vue';
+<script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue';
 import { getArticleInfoById } from '@/api/';
 
-export default {
+export default defineComponent({
   props: ['id'],
   setup(props) {
-    const article = ref({});
+    const article = ref({} as Article & Course);
 
     const saveStudyInfo = () => {
       const { id, courseId, sectionId } = article.value;
-      localStorage.setItem('last_study_course_id', courseId);
-      localStorage.setItem(`course_${courseId}_last_study_article_id`, id);
+      localStorage.setItem('last_study_course_id', String(courseId));
+      localStorage.setItem(
+        `course_${courseId}_last_study_article_id`,
+        String(id)
+      );
       localStorage.setItem(
         `course_${courseId}_last_study_section_id`,
-        sectionId
+        String(sectionId)
       );
     };
 
@@ -38,7 +41,7 @@ export default {
 
     return { article };
   },
-};
+});
 </script>
 
 <style lang="stylus" scoped>

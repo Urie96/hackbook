@@ -8,18 +8,17 @@
   </div>
 </template>
 
-<script>
-import ArticleHead from './ArticleHead';
-import ArticleContent from './ArticleContent';
-import ArticleCommentList from './ArticleCommentList';
-import NavBar from '../common/NavBar';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import ArticleHead from './ArticleHead.vue';
+import ArticleContent from './ArticleContent.vue';
+import ArticleCommentList from './ArticleCommentList.vue';
+import NavBar from '@/components/common/NavBar.vue';
 
-export default {
+export default defineComponent({
   props: ['id'],
-  setup() {
-    return { ArticleHead, ArticleContent, ArticleCommentList, NavBar };
-  },
-};
+  components: { ArticleHead, ArticleContent, ArticleCommentList, NavBar },
+});
 </script>
 
 <style lang="stylus" scoped>
