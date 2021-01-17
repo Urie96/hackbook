@@ -14,6 +14,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/linguo': {
+        target: 'https://linguomm.xyz',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/linguo/, ''),
+      },
     },
   },
 });

@@ -1,1 +1,1 @@
-docker build -t nginx-brotli:alpine-edge .
+docker build -t nginx-brotli:alpine .

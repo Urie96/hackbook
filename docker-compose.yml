@@ -1,21 +1,20 @@
 version: "3.5"
 
 services:
-  # hackbook-front:
-  #   build: ./front-end
-  #   ports:
-  #     - "7122:8080"
-  #   container_name: "hackbook-front"
-  #   networks:
-  #     - default
+  front:
+    build: ./front-end
+    ports:
+      - "7122:80"
+    container_name: "hackbook-front"
+    networks:
+      - default
 
-  hackbook-back:
+  back:
     build: ./back-end
     container_name: "hackbook-back"
-    ports:
-      - "7122:8080"
     volumes:
-      - /root/data/hackbook:/root/data
+      # - /root/data/hackbook:/root/data
+      - ./back-end/data:/root/data
     environment:
       - PORT=8080
       - SSO=https://sso.sweetlove.top

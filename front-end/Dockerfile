@@ -6,7 +6,7 @@
 # COPY . .
 # RUN npm run build
 
-FROM nginx-brotli:alpine-edge as app
+FROM nginx-brotli:alpine as app
 # COPY --from=builder /tmp/dist /usr/share/nginx/html
-COPY ./dist /usr/share/nginx/html
-COPY hackbook-nginx.conf /etc/nginx/conf.d/
+COPY ./dist /root
+COPY ./nginx-conf /etc/nginx/

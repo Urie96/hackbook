@@ -14,39 +14,49 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, reactive, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 
+interface Item {
+  title: string;
+  href: string;
+  imgsrc: string;
+}
+
 export default defineComponent({
-  data() {
-    return {
-      items: [],
+  setup() {
+    const items = reactive([] as Item[]);
+    const router = useRouter();
+
+    const init = async () => {
+      const { data } = await axios.get('/linguo/');
+      const dom = document.createElement('html');
+      dom.innerHTML = data;
+      dom.querySelectorAll('.update_area_content ul li').forEach((ele) => {
+        const title =
+          ele.querySelector<HTMLElement>('.case_info')?.innerText || 'default';
+        const res = ele
+          .querySelector('a')
+          ?.getAttribute('href')
+          ?.match(/\/([^/]+)$/);
+        const href = res ? res[1] : '';
+        const imgsrc =
+          ele.querySelector('img')?.getAttribute('data-original') || '';
+        items.push({ title, href, imgsrc });
+      });
     };
-  },
-  async mounted() {
-    const { data } = await axios.get('/linguo');
-    console.log(data);
-    // const $ = cheerio.load(data);
-    // $('.update_area_content ul li').each((i, ele) => {
-    //   const $ele = $(ele);
-    //   const item = {};
-    //   item.title = $ele.find('.case_info').text();
-    //   const [, href] = $ele
-    //     .find('a')
-    //     .attr('href')
-    //     .match(/\/([^/]+)$/);
-    //   item.href = href;
-    //   item.imgsrc = $ele.find('img').attr('data-original');
-    //   this.items.push(item);
-    // });
-  },
-  methods: {
-    turnTo(url: string) {
-      this.$router.push({
+
+    onMounted(init);
+
+    const turnTo = (url: string) => {
+      router.push({
         name: 'newImgs',
         params: { url },
       });
-    },
+    };
+
+    return { items, turnTo };
   },
 });
 </script>
