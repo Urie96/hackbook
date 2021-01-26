@@ -1,19 +1,22 @@
 <template>
-  <article ref="content" id="article-content"></article>
+  <article
+    ref="contentRef"
+    id="article-content"
+    v-html="article.content"
+  ></article>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onDeactivated, onMounted } from 'vue';
-import { getArticleContentById } from '@/api/';
-import { highlightIfNeed, renderMathIfNeed, Loading } from '@/utils/';
+import { highlightIfNeed, renderMathIfNeed } from '@/utils/';
+import { article } from './store';
 
 export default defineComponent({
-  props: ['id'],
   setup(props) {
-    const content = ref({} as HTMLElement);
+    const contentRef = ref({} as HTMLElement);
 
     let interval: NodeJS.Timeout;
-    const storageKey = `article_${props.id}_log`;
+    const storageKey = `article_${article.id}_log`;
 
     const savingStudyRecord = () => {
       const scrollingElement = document.scrollingElement;
@@ -34,27 +37,16 @@ export default defineComponent({
       }
     };
 
-    const loadContent = async () => {
-      const data = await getArticleContentById(props.id);
-      // replcace 去除Math区域内的html标签，使katex能正确识别
-      content.value.innerHTML = data.replace(/\${2}[\w\W]+?\${2}/g, (match) =>
-        match.replace(/<[^>]+>/g, '')
-      );
-    };
-
     onDeactivated(stopSavingStudyInfo);
 
-    onMounted(async () => {
-      Loading.pop();
-      await loadContent();
-      Loading.clear();
+    onMounted(() => {
       turnToLastStudyPosition();
       savingStudyRecord();
-      highlightIfNeed(content.value);
-      renderMathIfNeed(content.value);
+      highlightIfNeed(contentRef.value);
+      renderMathIfNeed(contentRef.value);
     });
 
-    return { content };
+    return { contentRef, article };
   },
 });
 </script>

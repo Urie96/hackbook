@@ -90,7 +90,7 @@ export default {
   height: 2.5rem;
   border-radius: 0.25rem;
   line-height: 2.5rem;
-  background-color: #fff;
+  background-color: var(--background-color, #fff);
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
   position: fixed;
   display: inline-block;

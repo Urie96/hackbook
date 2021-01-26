@@ -1,0 +1,61 @@
+// @name getAllCourses
+POST https://time.geekbang.org/serv/v3/lecture/list
+Origin: https://time.geekbang.org
+User-Agent: 123
+
+{
+  "label_id": 0,
+  "type": 1,
+}
+
+// @name getCourseDescription
+POST https://time.geekbang.org/serv/v1/column/intro
+Origin: https://time.geekbang.org
+Content-Type: application/json
+
+{"cid": 100056701}
+
+###
+// @name getSections
+POST https://time.geekbang.org/serv/v1/chapters HTTP/1.1
+Origin: https://time.geekbang.org
+Content-Type: application/json
+
+{"cid":100001901}
+
+###
+// @name getArticleInfo
+POST https://time.geekbang.org/serv/v1/column/articles
+Origin: https://time.geekbang.org
+Content-Type: application/json
+
+{"cid":100001901,"size":500,"prev":0,"order":"earliest","sample":false}
+
+###
+// @name getArticleComments
+POST https://time.geekbang.org/serv/v1/comments
+Origin: https://time.geekbang.org
+Content-Type: application/json
+
+{
+  "aid": 105643,
+    "prev": 0
+}
+
+###
+// @name login
+POST https://account.geekbang.org/account/ticket/login
+Content-Type: application/json
+Origin: https://account.geekbang.org
+
+{"platform":3,"appid":1,"remember":1,"data":
+"%7B%22a%22%3A%22FFFF0N00000000009834%22%2C%22c%22%3A%221611563556789%3A0.11170739100282767%22%2C%22d%22%3A%22nvc_message_h5%22%2C%22j%22%3A%7B%22test%22%3A1%7D%2C%22h%22%3A%7B%22umidToken%22%3A%22T2gAEBL6bg74dznVUiJBGHQgCvwcexiqZXPRH8PgNl8-yxvQfvhM-L0KFZKaXRiOOAk%3D%22%7D%2C%22b%22%3A%22140%23KeFotvVWzzWS%2Bzo2miP%2BAtSohA3Qcfn6nQWyNQ%2FY7oUkXTY%2BAvRoL%2BXHd1dnyrXjcWlUAN10eIfpXMDZ0ZJgEaGc%2FCu6b4pjezrgN6hqzznU%2Fnfrzb%2BxzX8TVaBulFzx2DD3VtgqxLRKpyyto1SnE2usV2EqlaOz2P83qt1LzQz2p1kKlp1zz%2BuiVRcR0u142Pc3VtkDzFxOnsl3%2BoQxzPzbVuJql9Szi8c3BGKPzFzb23VRlpCcy82iuCoqrbrxbDc%2Bf6h%2FwQc02X5QUppiz%2FOifdnqxzrxVDc%2BC3h%2F4FB0UHmijDapVrMn3rNmgkYEG5R5hBErI2lYoAPeIsAUl0WUHHx1sGeTJF3Bb12EFc7QYGUAsFE7QFR%2BeE3FZYO%2BJX66XIyxrXPWwm8kGfJpb%2F2zYKWf7zSIXjfOmTRP2WjnaucLD1A1CB8AyQ3vhYEbdnYsVq88oSFxI4QmeQZBBwolK%2FOtWmtSqjHYBo3lZsJOnL%2F5BwEkVPCZpQLe7zXNwvQ8NaYblHUSmYXHeWs6Vwauk%2FMtt%2B00y%2FtM9PiM98jMn185Fx5wxvcE5ygNV8UFWoOwIvpa0bzmI6XdeGZcr7ucGe6KyIp9Qxwt4olEbJWCZuLq8Zm9w4y4dLJTPYWmKcbUknqGwD9N7vPt7MD8zijYXvtyRCvjITKvitgv9M89wFu4Z48VnpTbOE70CctJnYQu0M%2FwzCNG21BusDemalevXeTusS5yxXjWIBYTumnK45QFg7%2BUbngtlQwPX9mhZsYc400wkR7G%2FURGc5RVYygCud%2BGMIpQw%2BzfrE8M4NgeIhGkWxmKWC%2BdN6gQkjMKcTgy%22%2C%22e%22%3A%22KCQ06fQXvwviEsl7_Ntg_DgovqJusg3JuB8fyZRauM4vHU7GcUVBCRbFQ6TYW-vWtpo1yQ2LjvAGY1-QJDw9jbK-mUbfOuazHjdO0GI6f6pTz4GPW1M-SKI60yLwrCIJsv0ZnyIfzBGBx5haezinFiLVEPrnUUciWroSEn9FisPO8O_wabIa26HO5-kYxxHrVXELYfI4VbiVoCXHjjCyJXwoPNlxMLuXdZ-VT3sok9g%22%2C%22i%22%3Atrue%7D"
+,"source":"","ucode":"","sc":{"uid":"","report_source":"H5","utm_identify":"","utm_source":"","utm_medium":"","utm_campaign":"","utm_content":"","utm_term":"","share_code":"","original_id":"17738a35d968ba-061f2b6741aac6-5437971-304500-17738a35d97850","refer":"极客时间"},"country":86,"cellphone":"18362669756","password":"youling"}
+
+###
+// @name token
+POST https://account.infoq.cn/account/ticket/token
+Origin: https://time.geekbang.org
+Content-Type: application/json
+
+{"token":"31bc5037c0906264"}

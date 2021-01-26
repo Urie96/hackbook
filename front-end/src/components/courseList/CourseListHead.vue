@@ -10,13 +10,15 @@
       <span class="site-name">HackBook</span>
     </div>
     <div class="right">
+      <ModePicker />
       <fullscreen-button style="height: 36px" />
     </div>
   </header>
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
-import { searchedCourseIds, courses } from './courses';
+import ModePicker from '@/components/common/ModePicker.vue';
+import { searchedCourseIds, courses } from './store';
 
 const debounce = <T>(fn: (...args: any[]) => T, delay: number) => {
   let timer: NodeJS.Timeout;
@@ -27,6 +29,7 @@ const debounce = <T>(fn: (...args: any[]) => T, delay: number) => {
 };
 
 export default defineComponent({
+  components: { ModePicker },
   setup() {
     const modelQuery = ref('');
     const placeholder = '';
@@ -64,7 +67,7 @@ header {
   // justify-content: space-between;
   padding: 0.7rem 1.5rem;
   padding-left: 7rem;
-  background: #fff;
+  background: var(--background-color);
   z-index: 20;
   height: 3.6rem;
   position: fixed;
@@ -114,12 +117,12 @@ header {
     position: absolute;
     right: 1rem;
     top: 0.7rem;
-    width: 2rem;
-    height: 2rem;
+    display: flex;
 
     svg {
+      width: 2rem;
+      height: 2rem;
       fill: currentcolor;
-      height: 100%;
     }
   }
 }

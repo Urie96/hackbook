@@ -1,10 +1,10 @@
 <template>
   <van-swipe-cell>
     <div style="border: 1px solid #eee; border-style: solid none none none">
-      <Card :img="image" @click="routeToThisCourse">
+      <Card :img="course.image" @click="routeToThisCourse">
         <div class="flex-y">
           <div>
-            <div class="title oneline">{{ title }}</div>
+            <div class="title oneline">{{ course.title }}</div>
             <i
               class="iconfont icon-heart heart"
               v-if="isFavorite"
@@ -16,16 +16,16 @@
               @click="cancelDislike"
             ></i>
           </div>
-          <div class="brief oneline">{{ brief }}</div>
+          <div class="brief oneline">{{ course.brief }}</div>
           <div class="tag">
-            <tag>{{ teacherName }}</tag>
-            <tag>{{ teacherTitle }}</tag>
+            <tag>{{ course.teacherName }}</tag>
+            <tag>{{ course.teacherTitle }}</tag>
           </div>
           <div>
-            <span class="price">{{ price }}</span>
-            <span class="buy-count">{{ purchasedCount }}</span>
+            <span class="price">{{ course.price }}</span>
+            <span class="buy-count">{{ course.purchasedCount }}人购买</span>
             <span class="study">
-              <i class="iconfont icon-Loading spin" v-if="!done"></i>
+              <i class="iconfont icon-Loading spin" v-if="!course.done"></i>
               {{ lastStudy ? '继续学习' : '学习' }}
               <i class="iconfont icon-arrow-right"></i>
             </span>
@@ -59,56 +59,45 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import Card from '../common/Card.vue';
+import Card from '@/components/common/Card.vue';
+import { CourseTendType } from '@/types/index.d.ts';
 import {
-  courseIsFavorite,
   likeCourse,
   cancelLikeCourse,
-  courseIsDislike,
   dislikeCourse,
   cancelDislikeCourse,
-} from '../../utils/favorite';
+  courses,
+} from './store';
 
 export default defineComponent({
-  props: [
-    'image',
-    'title',
-    'brief',
-    'teacherName',
-    'teacherTitle',
-    'price',
-    'id',
-    'purchasedCount',
-    'done',
-    'favset',
-    'lastStudy',
-  ],
+  props: ['index', 'lastStudy'],
   components: { Card },
   setup(props) {
+    const course = courses.value[props.index] as Course;
     const router = useRouter();
 
     const routeToThisCourse = () => {
       router.push({
         name: 'course',
-        params: { id: props.id },
+        params: { id: course.id },
       });
     };
 
-    const isFavorite = computed(() => courseIsFavorite(props.id));
-    const isDislike = computed(() => courseIsDislike(props.id));
-    const buttonIsDisable = computed(
-      () => courseIsFavorite(props.id) || courseIsDislike(props.id)
+    const isFavorite = computed(() => course.userTend === CourseTendType.LIKE);
+    const isDislike = computed(
+      () => course.userTend === CourseTendType.DISLIKE
     );
-    const like = () => likeCourse(props.id);
+    const buttonIsDisable = computed(() => isFavorite.value || isDislike.value);
+    const like = () => likeCourse(course);
     const cancelLike = (event: Event) => {
       event.stopPropagation();
       // event.cancelBubble = true;
-      cancelLikeCourse(props.id);
+      cancelLikeCourse(course);
     };
-    const dislike = () => dislikeCourse(props.id);
+    const dislike = () => dislikeCourse(course);
     const cancelDislike = (event: Event) => {
       event.stopPropagation();
-      cancelDislikeCourse(props.id);
+      cancelDislikeCourse(course);
     };
 
     return {
@@ -120,6 +109,8 @@ export default defineComponent({
       cancelDislike,
       buttonIsDisable,
       routeToThisCourse,
+      CourseTendType,
+      course,
     };
   },
 });

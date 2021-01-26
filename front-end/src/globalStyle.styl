@@ -13,7 +13,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
-  color: #2c3e50;
+}
+
+body {
+  min-width: 100vw
+  min-height: 100vh
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .oneline {
@@ -35,6 +41,18 @@
   --mask-color: #888;
   --box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
   --background-color: #fff;
+}
+
+body.dark {
+  --background-color: #181818;
+  --box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.6);
+  --box-shadow-hover: 0 2px 16px 0 rgba(0, 0, 0, 0.7);
+  --text-color: rgba(255, 255, 255, 0.8);
+  --text-color-sub: #8B8B8B;
+  --border-color: rgba(0, 0, 0, 0.3);
+  --code-color: rgba(0, 0, 0, 0.3);
+  --mask-color: #000;
+  --code-bg-color: rgba(255, 255, 255, 0.6);
 }
 
 .c-primary {
@@ -89,4 +107,10 @@
 
 .van-nav-bar .van-icon, .van-nav-bar__text {
   color: var(--theme);
+}
+
+.middle {
+  display flex
+  justify-content: center
+  align-items: center
 }

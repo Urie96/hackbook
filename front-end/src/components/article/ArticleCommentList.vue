@@ -13,23 +13,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { getCommentsByArticleId } from '@/api/';
+import { defineComponent } from 'vue';
 import ArticleCommentListItem from './ArticleCommentListItem.vue';
+import { comments } from './store';
 
 export default defineComponent({
-  props: ['id'],
   components: { ArticleCommentListItem },
-  setup(props) {
-    const comments = ref([] as Comment[]);
-
-    const loadComments = async () => {
-      const data = await getCommentsByArticleId(props.id);
-      comments.value = data;
-    };
-
-    loadComments();
-
+  setup() {
     return { comments };
   },
 });

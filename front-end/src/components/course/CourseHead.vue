@@ -19,26 +19,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import NavBar from '@/components/common/NavBar.vue';
 import Card from '@/components/common/Card.vue';
-import { getCourseById } from '@/api/';
+import { course } from './store';
 
 export default defineComponent({
-  props: ['courseId'],
   components: { Card, NavBar },
-  setup(props) {
-    const course = ref({} as Course);
-
-    const loadCourse = async () => {
-      const data = await getCourseById(props.courseId);
-      if (data) {
-        course.value = data;
-      }
-    };
-
-    loadCourse();
-
+  setup() {
     return { course };
   },
 });

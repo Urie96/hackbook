@@ -16,15 +16,13 @@
     ></div>
     <div
       class="reply"
-      v-for="reply of comments"
+      v-for="reply of replies"
       :key="reply.id"
       v-html="reply.nickName + ': ' + reply.content"
     ></div>
     <div class="icon">
-      <div><i class="iconfont icon-comment"></i></div>
-      <div>
-        <i class="iconfont icon-star"> </i> {{ Number(likeCount) || '' }}
-      </div>
+      <div><i class="iconfont icon-comment"></i> {{ replies.length }}</div>
+      <div><i class="iconfont icon-star"> </i> {{ likeCount }}</div>
     </div>
     <divider />
   </div>
@@ -35,7 +33,7 @@ import { defineComponent, ref } from 'vue';
 import { getOneColor } from '@/utils/';
 
 export default defineComponent({
-  props: ['date', 'nickName', 'content', 'comments', 'likeCount'],
+  props: ['date', 'nickName', 'content', 'replies', 'likeCount'],
   setup() {
     const isSpread = ref(false);
 
@@ -57,7 +55,6 @@ export default defineComponent({
 }
 
 .name {
-  color: #353535;
   font-size: 1rem;
   font-weight: bold;
   height: 1.25rem;
@@ -71,7 +68,6 @@ export default defineComponent({
 }
 
 .content {
-  color: #4c4c4c;
   font-size: 1rem;
   font-weight: 400;
   white-space: normal;

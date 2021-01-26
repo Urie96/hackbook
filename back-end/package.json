@@ -1,28 +1,33 @@
 {
-  "name": "hackbook-back-end",
+  "name": "back",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node --files index.ts",
+    "start": "NODE_ENV=production ts-node --files index.ts",
+    "fetch:lagou": "ts-node --files ./crawler/fetch-lagou.ts",
+    "fetch:geek": "ts-node --files ./crawler/fetch-geek.ts",
+    "gen:type": "tsc -d ./models/index.ts --outDir ./@types; find ./@types -name '*.js' | xargs rm"
   },
-  "author": "urie",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "compose-middleware": "^5.0.1",
-    "cookie-parser": "^1.4.5",
-    "express": "^4.17.1",
-    "express-jwt": "^6.0.0",
-    "express-session": "^1.17.1",
-    "json-server": "^0.16.2",
+    "apollo-server-koa": "^2.19.2",
+    "graphql": "^15.4.0",
     "jsonwebtoken": "^8.5.1",
-    "morgan": "^1.10.0"
+    "koa": "^2.13.1",
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^9.1.1",
+    "type-graphql": "^1.1.1",
+    "typeorm": "^0.2.30",
+    "typescript": "^4.1.3"
   },
   "devDependencies": {
-    "eslint": "^7.12.1",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.1"
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/koa": "^2.11.6",
+    "@types/superagent": "^4.1.10",
+    "superagent": "^6.1.0"
   }
 }

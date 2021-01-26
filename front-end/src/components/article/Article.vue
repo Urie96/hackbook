@@ -1,23 +1,35 @@
 <template>
-  <NavBar title="Article" />
-  <div class="main" :key="id">
-    <ArticleHead :id="id" />
-    <ArticleContent :id="id" />
-    <ArticleCommentList :id="id" />
+  <NavBar :title="article.title" />
+  <div class="main">
+    <div class="title">
+      {{ article.title }}
+    </div>
+    <div class="info">{{ article.publishDate }} {{ course.teacherName }}</div>
+    <ArticleContent />
+    <ArticleCommentList />
     <back-to-top />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import ArticleHead from './ArticleHead.vue';
+import { defineComponent, watchEffect } from 'vue';
 import ArticleContent from './ArticleContent.vue';
 import ArticleCommentList from './ArticleCommentList.vue';
 import NavBar from '@/components/common/NavBar.vue';
+import { Loading } from '@/utils/';
+import { init, course, article } from './store';
 
 export default defineComponent({
   props: ['id'],
-  components: { ArticleHead, ArticleContent, ArticleCommentList, NavBar },
+  components: { ArticleContent, ArticleCommentList, NavBar },
+  setup(props) {
+    watchEffect(async () => {
+      Loading.pop();
+      await init(props.id);
+      Loading.clear();
+    });
+    return { course, article };
+  },
 });
 </script>
 
@@ -25,5 +37,17 @@ export default defineComponent({
 .main {
   padding: 1.5rem;
   text-align: justify;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 22px;
+  margin: 5px 0px;
+}
+
+.info {
+  color: #888;
+  font-size: 13px;
+  font-weight: 400;
 }
 </style>

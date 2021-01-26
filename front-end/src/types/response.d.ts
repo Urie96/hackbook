@@ -1,60 +1,9 @@
-declare interface Course {
-  id: number;
-  title: string;
-  brief: string;
-  teacherName: string;
-  teacherTitle: string;
-  price: number;
-  image: string;
-  articleCount: number;
-  purchasedCount: string;
-  done: boolean;
-}
+declare type Course = import('./back-end/').Course;
 
-declare interface Section {
-  id: number;
-  courseId: number;
-  name: string;
-  articles: Article[];
-}
+declare type Section = import('./back-end/').Section;
 
-declare interface Article {
-  id: number;
-  sectionId: number;
-  courseId: number;
-  title: string;
-  done: boolean;
-  publishDate: string;
-  course: Course;
-}
+declare type Article = import('./back-end/').Article;
 
-declare interface CourseIntroduce {
-  courseId: number;
-  content: string;
-}
+declare type ArticleComment = import('./back-end/').ArticleComment;
 
-declare interface ArticleContent {
-  articleId: number;
-  content: string;
-}
-
-declare interface Comment {
-  id: number;
-  articleId: number;
-  content: string;
-  comments: Comment[];
-  likeCount: string;
-  nickName: string;
-}
-
-declare interface Favorite {
-  id: number;
-  courseId: number;
-  userId: number;
-}
-
-declare interface Dislike {
-  id: number;
-  courseId: number;
-  userId: number;
-}
+declare type CourseTend = import('./back-end/').CourseTend;

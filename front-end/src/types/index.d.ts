@@ -1,1 +1,4 @@
-import { ComponentOptionsBase } from 'vue';
+export enum CourseTendType {
+  LIKE = 'LIKE',
+  DISLIKE = 'DISLIKE',
+}

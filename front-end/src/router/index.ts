@@ -59,15 +59,6 @@ const routes: RouteRecordRaw[] = [
           requireAuth: true,
         },
       },
-      {
-        path: ':id',
-        props: true,
-        component: () =>
-          import(/* webpackChunkName: 'bl' */ '@/components/blue/Main.vue'),
-        meta: {
-          requireAuth: true,
-        },
-      },
     ],
   },
   {

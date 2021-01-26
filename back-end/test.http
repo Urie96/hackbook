@@ -1,22 +1,5 @@
-@token = token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMSIsInBob25lIjoiMTc4MjgyMjg4MjciLCJwYXNzd29yZCI6InlvdWxpbmcifSwiaWF0IjoxNjA5MzAyMDMxLCJleHAiOjE2MDk0NzQ4MzF9.b9BzNLItsSV38uL9NPRtvmw05ri5JGbN00fq4nCKezg
-@host = http://localhost:7122
+POST http://localhost:3000/graphql
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaWF0IjoxNjExMjk0NDM4LCJleHAiOjE2MTU2MTQ0Mzh9.-_alArSrreGVXEtLzsWK48CcqbVwDZO3bOYx2Ddb08o
+content-type: application/json
 
-GET {{host}}/userservice/dislike
-Cookie: {{token}}
-
-
-###
-
-POST {{host}}/userservice/dislike
-Cookie: {{token}}
-Content-Type: application/json;charset=UTF-8
-
-{
-    "courseId":20
-}
-
-###
-
-DELETE {{host}}/userservice/dislike
-Cookie: {{token}}
-
+{"query":"{\n  login(loginReturnTo: \"/article/L4321\") {\n    message\n    redirect\n  }\n}\n"}

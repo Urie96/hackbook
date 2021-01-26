@@ -19,6 +19,9 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/linguo/, ''),
       },
+      '/graphql': {
+        target: 'http://localhost:4000',
+      },
     },
   },
 });

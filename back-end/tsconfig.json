@@ -1,0 +1,21 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "removeComments": true,
+    "alwaysStrict": true,
+    "allowJs": true,
+    "baseUrl": "./",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "esnext",
+    "lib": ["esnext", "esnext.asynciterable"],
+    "esModuleInterop": true
+  }
+}
