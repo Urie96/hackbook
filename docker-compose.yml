@@ -14,6 +14,9 @@ services:
       - PORT=8080
       - SSO=https://sso.sweetlove.top
       - JWT_SECRET=Fwet)9243?
+      - TYPEORM_HOST=mysql
+      - TYPEORM_PASSWORD=youling
+      - TYPEORM_USERNAME=root
     networks:
       - mysql_default
       - default

@@ -47,5 +47,9 @@ header {
   .van-nav-bar__title {
     color: var(--text-color);
   }
+
+  .van-hairline--bottom::after {
+    border-bottom-color: var(--border-color);
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <van-swipe-cell>
-    <div style="border: 1px solid #eee; border-style: solid none none none">
+    <div class="item">
       <Card :img="course.image" @click="routeToThisCourse">
         <div class="flex-y">
           <div>
@@ -109,7 +109,6 @@ export default defineComponent({
       cancelDislike,
       buttonIsDisable,
       routeToThisCourse,
-      CourseTendType,
       course,
     };
   },
@@ -121,14 +120,19 @@ $heart = var(--heart);
 $heart-broken = #ff6666b3;
 $price = var(--price);
 
+.item {
+  border: 1px solid var(--border-color);
+  border-style: none none solid none;
+}
+
 .buy-count {
   margin-left: 0.5rem;
-  color: #606060;
+  color: var(--text-color-sub);
   font-size: 0.6rem;
 }
 
 .study {
-  color: #606060;
+  color: var(--text-color-sub);
   font-size: 0.65rem;
   font-weight: 500;
   float: right;
@@ -184,7 +188,7 @@ $price = var(--price);
 
 .brief {
   font-size: 0.85rem;
-  color: #666;
+  color: var(--text-color-sub);
 }
 
 .tag {

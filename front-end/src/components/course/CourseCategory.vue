@@ -99,6 +99,14 @@ export default defineComponent({
   .van-cell {
     background-color: var(--background-color);
     color: var(--text-color);
+
+    &::after {
+      border-bottom-color: var(--border-color);
+    }
+  }
+
+  .van-collapse-item--border::after {
+    border-top-color: var(--border-color);
   }
 
   .van-collapse-item__content {

@@ -21,15 +21,6 @@ generateSW({
                     statuses: [0, 200]
                 }
             }
-        },
-        {
-            urlPattern: /https?:\/\/[^/]+\/api\/courses/,
-            handler: 'StaleWhileRevalidate',
-            options: {
-                cacheableResponse: {
-                    statuses: [200]
-                }
-            }
         }
     ]
 }).then(({ count, size }) => {

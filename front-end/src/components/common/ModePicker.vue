@@ -58,10 +58,10 @@ enum Mode {
 const render = (mode: Mode) => {
   switch (mode) {
     case Mode.DARK:
-      document.body.classList.add('dark');
+      document.documentElement.classList.add('dark');
       break;
     case Mode.LIGHT:
-      document.body.classList.remove('dark');
+      document.documentElement.classList.remove('dark');
   }
 };
 
@@ -82,23 +82,25 @@ const applyMode = (() => {
   };
 })();
 
+const modeOptions = ref([
+  { mode: Mode.DARK, title: 'dark' },
+  { mode: Mode.AUTO, title: 'auto' },
+  { mode: Mode.LIGHT, title: 'light' },
+]);
+const currentMode = ref(Mode.AUTO);
+
+const savedMode: unknown = localStorage.getItem('mode');
+if (savedMode) {
+  currentMode.value = savedMode as Mode;
+}
+
+watchEffect(() => {
+  applyMode(currentMode.value);
+});
+
 export default defineComponent({
   setup() {
     const showMenu = ref(false);
-    const modeOptions = ref([
-      { mode: Mode.DARK, title: 'dark' },
-      { mode: Mode.AUTO, title: 'auto' },
-      { mode: Mode.LIGHT, title: 'light' },
-    ]);
-    const currentMode = ref(Mode.AUTO);
-
-    const savedMode: unknown = localStorage.getItem('mode');
-    if (savedMode) {
-      currentMode.value = savedMode as Mode;
-    }
-
-    const getClass = (mode: Mode) =>
-      mode !== currentMode.value ? mode : `${mode} active`;
 
     const clickMode = (mode: Mode) => {
       currentMode.value = mode;
@@ -106,11 +108,7 @@ export default defineComponent({
       localStorage.setItem('mode', currentMode.value as string);
     };
 
-    watchEffect(() => {
-      applyMode(currentMode.value);
-    });
-
-    return { showMenu, modeOptions, currentMode, getClass, clickMode };
+    return { showMenu, modeOptions, currentMode, clickMode };
   },
 });
 </script>

@@ -5,8 +5,6 @@ import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import { authChecker, userParser } from './auth';
 
-const getEnv = (name: string) => process.env[name] as any;
-
 async function bootstrap() {
   await createConnection();
 
@@ -25,7 +23,6 @@ async function bootstrap() {
 
   const app = new Koa();
   app.use(userParser);
-  // app.use(ssoLoginRoute('/login'));
   app.use(server.getMiddleware());
   const port = process.env.PORT || 4000;
   app.listen({ port }, () =>

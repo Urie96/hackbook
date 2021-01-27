@@ -1,5 +1,4 @@
-POST http://localhost:3000/graphql
+GET http://localhost:4000/1
 Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaWF0IjoxNjExMjk0NDM4LCJleHAiOjE2MTU2MTQ0Mzh9.-_alArSrreGVXEtLzsWK48CcqbVwDZO3bOYx2Ddb08o
 content-type: application/json
-
-{"query":"{\n  login(loginReturnTo: \"/article/L4321\") {\n    message\n    redirect\n  }\n}\n"}
+HOST: 1
