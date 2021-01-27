@@ -16,6 +16,7 @@ services:
       - JWT_SECRET=Fwet)9243?
     networks:
       - mysql_default
+      - default
 
 networks:
   mysql_default:
