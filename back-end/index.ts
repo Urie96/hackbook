@@ -5,6 +5,8 @@ import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import { authChecker, userParser } from './auth';
 
+const getEnv = (name: string) => process.env[name] as any;
+
 async function bootstrap() {
   await createConnection();
 

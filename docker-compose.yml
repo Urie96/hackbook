@@ -6,20 +6,11 @@ services:
     ports:
       - "7122:80"
     container_name: "hackbook-front"
-    networks:
-      - default
 
   back:
     build: ./back-end
     container_name: "hackbook-back"
-    volumes:
-      # - /root/data/hackbook:/root/data
-      - ./back-end/data:/root/data
     environment:
       - PORT=8080
       - SSO=https://sso.sweetlove.top
       - JWT_SECRET=Fwet)9243?
-      - DATA_DIR=/root/data
-      - SSO_RETURN=https://book.sweetlove.top/api/login
-    networks:
-      - default

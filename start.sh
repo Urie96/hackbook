@@ -1,5 +1,5 @@
 cd front-end
-npm ci
+npm ci --unsafe-perm=true
 npm run build
 cd ..
 docker-compose up -d --build
