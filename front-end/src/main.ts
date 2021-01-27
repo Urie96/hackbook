@@ -1,8 +1,6 @@
 import { createApp } from 'vue';
 import {
   Button,
-  Search,
-  Overlay,
   SwipeCell,
   Image as VanImage,
   NavBar,
@@ -23,8 +21,6 @@ import FullScreenButton from '@/components/common/FullScreenButton.vue';
 
 createApp(App)
   .use(Button)
-  .use(Search)
-  .use(Overlay)
   .use(SwipeCell)
   .use(VanImage)
   .use(NavBar)

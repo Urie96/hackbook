@@ -4,7 +4,7 @@ services:
   front:
     build: ./front-end
     ports:
-      - "7122:80"
+      - "10000:80"
     container_name: "hackbook-front"
 
   back:
