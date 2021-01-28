@@ -61,9 +61,9 @@ export default defineComponent({
   bottom: 1rem;
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
-  background: var(--bgcolor, #fff);
-  color: var(--text-color, $textColor);
+  box-shadow: var(--box-shadow);
+  background: var(--background-color);
+  color: var(--text-color);
   line-height: 1.5;
   z-index: 110;
   cursor: pointer;

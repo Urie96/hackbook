@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-$accentColor ?= #3eaf7c;
+$accentColor ?= var(--theme);
 $textColor ?= #2c3e50;
 $borderColor ?= #eaecef;
 $codeBgColor ?= #282c34;

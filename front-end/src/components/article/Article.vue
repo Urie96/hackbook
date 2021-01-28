@@ -1,5 +1,5 @@
 <template>
-  <NavBar :title="article.title" />
+  <NavBar :title="article.title" @goBack="goBack" />
   <div class="main">
     <div class="title">
       {{ article.title }}
@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import { defineComponent, watchEffect } from 'vue';
+import { useRouter } from 'vue-router';
 import ArticleContent from './ArticleContent.vue';
 import ArticleCommentList from './ArticleCommentList.vue';
 import NavBar from '@/components/common/NavBar.vue';
@@ -23,12 +24,26 @@ export default defineComponent({
   props: ['id'],
   components: { ArticleContent, ArticleCommentList, NavBar },
   setup(props) {
+    const router = useRouter();
+
     watchEffect(async () => {
       Loading.pop();
       await init(props.id);
       Loading.clear();
     });
-    return { course, article };
+
+    const goBack = () => {
+      if (course.id) {
+        router.replace({
+          name: 'course',
+          params: { id: course.id },
+        });
+      } else {
+        router.go(-1);
+      }
+    };
+
+    return { course, article, goBack };
   },
 });
 </script>

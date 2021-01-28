@@ -113,6 +113,11 @@ export default defineComponent({
     background-color: var(--background-color);
   }
 
+  [class*=van-hairline]::after {
+    border-top-color: var(--border-color);
+    border-bottom-color: var(--border-color);
+  }
+
   .lesson-item {
     color: var(--text-color);
   }

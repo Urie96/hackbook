@@ -91,7 +91,7 @@ export default {
   border-radius: 0.25rem;
   line-height: 2.5rem;
   background-color: var(--background-color, #fff);
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: var(--box-shadow);
   position: fixed;
   display: inline-block;
   text-align: center;
@@ -110,7 +110,7 @@ export default {
     margin: auto;
     width: 26px;
     height: 26px;
-    fill: #3eaf7c;
+    fill: var(--theme);
   }
 }
 

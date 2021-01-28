@@ -1,5 +1,5 @@
 <template>
-  <NavBar :title="course.title" />
+  <NavBar :title="course.title" @goBack="goBack" />
   <div class="head">
     <Card :img="course.image">
       <div class="intro">
@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 import NavBar from '@/components/common/NavBar.vue';
 import Card from '@/components/common/Card.vue';
 import { course } from './store';
@@ -27,7 +28,11 @@ import { course } from './store';
 export default defineComponent({
   components: { Card, NavBar },
   setup() {
-    return { course };
+    const router = useRouter();
+
+    const goBack = () => router.replace('/');
+
+    return { course, goBack };
   },
 });
 </script>

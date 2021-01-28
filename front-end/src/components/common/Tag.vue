@@ -5,7 +5,7 @@
 </template>
 
 <script>
-function getOneColor() {
+const getOneColor = (() => {
   const tagColorArr = [
     '#e15b64',
     '#f47e60',
@@ -20,9 +20,8 @@ function getOneColor() {
     '#fb9b5f',
     '#3498db',
   ];
-  const index = Math.floor(Math.random() * tagColorArr.length);
-  return tagColorArr[index];
-}
+  return () => tagColorArr[Math.floor(Math.random() * tagColorArr.length)];
+})();
 
 export default {
   setup() {
@@ -37,12 +36,13 @@ span.urie__tag {
   margin: 0.25rem;
   padding: 0.15rem 0.4rem;
   border-radius: 0.25rem;
-  color: #fff;
+  color: var(--background-color);
   transition: all 0.5s;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
+  opacity: var(--color-opacity, 1);
 
   &:hover {
     transform: scale(1.04);
