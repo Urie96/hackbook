@@ -4,6 +4,7 @@ import { ApolloServer } from 'apollo-server-koa';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import { authChecker, userParser } from './auth';
+import './crawler/blue';
 
 async function bootstrap() {
   await createConnection();

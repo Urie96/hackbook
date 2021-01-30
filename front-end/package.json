@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "vite",
     "lint": "vuedx-typecheck .",
-    "build": "rm -rf ./dist && vite build && npm run sw && npm run zip",
+    "prebuild": "rm -rf ./dist",
+    "build": "vite build",
+    "postbuild": "npm run sw && npm run zip",
     "sw": "node ./workbox-build.js",
     "zip": "node ./zip.js"
   },
