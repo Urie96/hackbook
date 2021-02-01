@@ -13,6 +13,7 @@ generateSW({
     dontCacheBustURLsMatching: /\.\w{8}\.[^.]*$/,
     globPatterns: ['**\/*.{js,css,html,png,jpg,jpeg,gif,svg,woff,woff2,eot,ttf,otf}'],
     navigateFallback: '/index.html',
+    navigateFallbackDenylist: [/\/graphql/],
     runtimeCaching: [
         {
             urlPattern: /https:\/\/(cdn|at)/,
