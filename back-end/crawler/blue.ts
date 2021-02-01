@@ -1,18 +1,24 @@
 import request from 'superagent';
 
-async function dailySign(qq: string) {
-  const agent = request.agent();
-  console.log(qq);
-  const res = await agent
-    .post('https://www.linguomm.xyz/wp-admin/admin-ajax.php')
-    .send(
-      `user_login=${qq}%40qq.com&password=youling&rememberme=1&redirect=https%3A%2F%2Flinguomm.xyz%2F&action=userlogin_form&token=ad00105b93`
-    );
-  console.log(JSON.parse(res.text));
-  const res2 = await agent
-    .post('https://www.linguomm.xyz/wp-admin/admin-ajax.php')
-    .send('action=daily_sign');
-  console.log(JSON.parse(res2.text));
+async function sign(qq: string) {
+  try {
+    const agent = request.agent();
+    console.log(qq);
+    const html = await agent.get('https://www.linguomm.xyz/login');
+    const token = html.text.match(/name="token" value="(\w+)"/)[1];
+    const res = await agent
+      .post('https://www.linguomm.xyz/wp-admin/admin-ajax.php')
+      .send(
+        `user_login=${qq}%40qq.com&password=youling&rememberme=1&redirect=https%3A%2F%2Flinguomm.xyz%2F&action=userlogin_form&token=${token}`
+      );
+    console.log(JSON.parse(res.text));
+    const res2 = await agent
+      .post('https://www.linguomm.xyz/wp-admin/admin-ajax.php')
+      .send('action=daily_sign');
+    console.log(JSON.parse(res2.text));
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 const phones = [
@@ -30,9 +36,17 @@ const phones = [
   '1378108578',
 ];
 
-try {
-  phones.forEach(dailySign);
-  setInterval(() => phones.forEach(dailySign), 1000 * 3600 * 24);
-} catch (error) {
-  console.log(error.message);
+function dailySign() {
+  let nextTime = new Date().setHours(8, 0) - new Date().valueOf();
+  if (nextTime < 0) nextTime += 1000 * 3600 * 24;
+  setTimeout(() => {
+    console.log(
+      new Date().toLocaleDateString(),
+      new Date().toLocaleTimeString()
+    );
+    phones.forEach(sign);
+    dailySign();
+  }, nextTime);
 }
+
+dailySign();
