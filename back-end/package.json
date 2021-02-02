@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node --files index.ts",
-    "start": "NODE_ENV=production ts-node --files index.ts",
-    "fetch:lagou": "ts-node --files ./crawler/fetch-lagou.ts",
-    "fetch:geek": "ts-node --files ./crawler/fetch-geek.ts",
-    "gen:type": "tsc -d ./models/index.ts --outDir ./@types; find ./@types -name '*.js' | xargs rm"
+    "start": "NODE_ENV=production ts-node --files ./src/index.ts",
+    "fetch:lagou": "ts-node --files ./src/crawler/fetch-lagou.ts",
+    "fetch:geek": "ts-node --files ./src/crawler/fetch-geek.ts",
+    "gen:type": "tsc -d ./src/models/index.ts --outDir ./@types; find ./@types -name '*.js' | xargs rm"
   },
   "keywords": [],
   "author": "",

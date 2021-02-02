@@ -1,5 +1,5 @@
 declare namespace Enum {
-  type UserRole = import('../models/Enum').UserRole;
+  type UserRole = import('../src/models/Enum').UserRole;
 
-  type CourseTendType = import('../models/Enum').CourseTendType;
+  type CourseTendType = import('../src/models/Enum').CourseTendType;
 }

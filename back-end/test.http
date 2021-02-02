@@ -1,1 +1,6 @@
-GET https://book.sweetlove.top/graphql
+POST https://book.sweetlove.top/graphql
+Content-Type: application/json
+
+{
+  "query": "{\n courses {\n id }\n}"
+}

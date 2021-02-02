@@ -7,7 +7,7 @@ declare namespace Koa {
     TArgs
   > = import('apollo-server-koa').IFieldResolver<TSource, TContext, TArgs>;
 
-  type User = import('../models/User').User;
+  type User = import('../src/models/User').User;
 
   interface Context extends ExtendableContext {
     user: User;
