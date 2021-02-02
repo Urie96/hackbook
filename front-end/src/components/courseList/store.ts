@@ -24,6 +24,7 @@ const getPriority = (course: Course) => {
 };
 
 export const init = async () => {
+  courses.value = [];
   const data = await getAllCourses();
   shuffle(data);
   courses.value = data;

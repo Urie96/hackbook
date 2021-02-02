@@ -41,9 +41,13 @@ export default defineComponent({
 
     const refreshStudyRecord = () => {
       lastArticleId.value =
-        localStorage.getItem(`course_${course.id}_last_study_article_id`) || '';
+        localStorage.getItem(
+          `course_${course.value.id}_last_study_article_id`
+        ) || '';
       lastSectionId.value =
-        localStorage.getItem(`course_${course.id}_last_study_section_id`) ||
+        localStorage.getItem(
+          `course_${course.value.id}_last_study_section_id`
+        ) ||
         sections[0].id ||
         '';
     };

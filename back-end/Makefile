@@ -1,4 +1,4 @@
-export PORT=8080
+export PORT=10000
 export SSO=https://sso.sweetlove.top
 export JWT_SECRET=Fwet)9243?
 export TYPEORM_HOST=localhost
