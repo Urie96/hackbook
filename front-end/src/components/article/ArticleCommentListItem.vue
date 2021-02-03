@@ -87,12 +87,12 @@ export default defineComponent({
 
 .reply {
   margin: 0;
-  color: #888;
+  color: var(--text-color-sub);
   font-size: 0.9rem;
   font-weight: 400;
   white-space: normal;
   word-break: break-all;
-  background: #f6f7fb;
+  background: var(--background-color-sub);
   border-radius: 0.6rem;
   padding: 1.1rem;
   overflow-x: scroll;

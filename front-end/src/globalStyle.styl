@@ -24,12 +24,7 @@
 $theme=#3eaf7c;
 
 :root {
-  $white=#fff;
-  --default-color-1: darken($white,10%);
-  --default-color-2: darken($white,20%);
-  --default-color-3: darken($white,30%);
-  --default-color-4: darken($white,40%);
-  --default-color-5: darken($white,50%);
+  $background=#fff;
   --heart: #ff6666;
   --price: #ff7452;
   --theme: $theme;
@@ -41,18 +36,15 @@ $theme=#3eaf7c;
   --pre-code-color: #353535;
   --mask-color: #888;
   --box-shadow: 0 1px 8px 0 rgba(0, 0,  0, 0.2);
-  --background-color: #fff;
+  --background-color: $background
+  --background-color-sub: darken($background,5%)
   --img-filter: brightness(1)
 }
 
 :root.dark {
-  $black= #000
-  --default-color-1: lighten($black,10%);
-  --default-color-2: lighten($black,20%);
-  --default-color-3: lighten($black,30%);
-  --default-color-4: lighten($black,40%);
-  --default-color-5: lighten($black,50%);
-  --background-color: #181818;
+  $background=#181818;
+  --background-color: $background
+  --background-color-sub: lighten($background,10%);
   --box-shadow: 0 1px 8px 0 rgba(255, 255, 255, 0.2);
   --box-shadow-hover: 0 2px 16px 0 rgba(0, 0, 0, 0.7);
   --text-color: rgba(255, 255, 255, 0.6);

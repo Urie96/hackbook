@@ -38,7 +38,7 @@ const phones = [
 
 function dailySign() {
   let nextTime = new Date().setHours(8, 0) - new Date().valueOf();
-  if (nextTime < 0) nextTime += 1000 * 3600 * 24;
+  if (nextTime <= 0) nextTime += 1000 * 3600 * 24;
   setTimeout(() => {
     console.log(
       new Date().toLocaleDateString(),
@@ -50,3 +50,4 @@ function dailySign() {
 }
 
 dailySign();
+// phones.forEach(sign);
