@@ -2,7 +2,7 @@
   <div class="category">
     <van-collapse v-model="lastSectionId" accordion>
       <van-collapse-item
-        v-for="section of sections"
+        v-for="section of course.sections"
         :key="section.id"
         :name="section.id"
       >
@@ -28,29 +28,15 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, onActivated, watch } from 'vue';
+import { defineComponent, ref, onActivated } from 'vue';
 import { useRouter } from 'vue-router';
-import { course, sections } from './store';
+import { course } from './store';
 
 export default defineComponent({
   setup() {
     const lastSectionId = ref('');
     const lastArticleId = ref('');
-
     const router = useRouter();
-
-    const refreshStudyRecord = () => {
-      lastArticleId.value =
-        localStorage.getItem(
-          `course_${course.value.id}_last_study_article_id`
-        ) || '';
-      lastSectionId.value =
-        localStorage.getItem(
-          `course_${course.value.id}_last_study_section_id`
-        ) ||
-        sections[0].id ||
-        '';
-    };
 
     const getClass = (article: Article) => {
       if (article.id === lastArticleId.value)
@@ -68,11 +54,21 @@ export default defineComponent({
       }
     };
 
-    watch(course, refreshStudyRecord);
+    const _course = course.value;
+    const refreshStudyRecord = () => {
+      lastArticleId.value = localStorage.getItem(
+        `course_${_course.id}_last_study_article_id`
+      );
+      lastSectionId.value =
+        localStorage.getItem(`course_${_course.id}_last_study_section_id`) ||
+        _course.sections[0]?.id ||
+        '';
+    };
 
+    refreshStudyRecord();
     onActivated(refreshStudyRecord);
 
-    return { lastSectionId, sections, turnToArticlePage, getClass };
+    return { course, lastSectionId, turnToArticlePage, getClass };
   },
 });
 </script>

@@ -6,6 +6,7 @@ import Blue from '@/views/Blue.vue';
 import CourseList from '@/components/courseList/CourseList.vue';
 import Course from '@/components/course/Course.vue';
 import Article from '@/components/article/Article.vue';
+import { Loading } from '@/utils';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -72,20 +73,12 @@ const router = createRouter({
   routes,
 });
 
-let isAuthenticated = false;
-
 router.beforeEach(async (to) => {
-  if (to.meta.requireAuth && !isAuthenticated) {
-    const success = await login(to.fullPath);
-    if (success) {
-      isAuthenticated = true;
-    } else {
-      return false;
-    }
-  }
+  if (to.meta.requireAuth && !window.isAuthenticated) await login(to.fullPath);
   if (to.meta.title) {
     document.title = to.meta.title;
   }
+  Loading.clear();
 });
 
 export default router;

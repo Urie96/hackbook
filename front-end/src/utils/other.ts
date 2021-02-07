@@ -1,3 +1,5 @@
+import { resolve } from 'path';
+
 export const getOneColor = () => {
   const tagColorArr = [
     '#e15b64',

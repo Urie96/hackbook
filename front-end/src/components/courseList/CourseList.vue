@@ -4,10 +4,7 @@
     <div style="padding-top: 3.6rem">
       <transition-group name="course-list">
         <div v-for="(courseItem, i) in courses" :key="courseItem.id">
-          <CourseListItem
-            :index="i"
-            :lastStudy="courseItem.id === lastStudyCourseId"
-          />
+          <CourseListItem :index="i" />
         </div>
       </transition-group>
     </div>
@@ -16,10 +13,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onActivated, onMounted } from 'vue';
+import { defineComponent, onActivated } from 'vue';
 import CourseListItem from './CourseListItem.vue';
 import CourseListHead from './CourseListHead.vue';
-import { Loading } from '../../utils/';
+import { Loading } from '@/utils/';
 import { courses, lastStudyCourseId, init } from './store';
 
 export default defineComponent({
@@ -32,11 +29,8 @@ export default defineComponent({
 
     onActivated(refreshLastStudyCourse);
 
-    onMounted(async () => {
-      Loading.pop();
-      await init();
-      Loading.clear();
-    });
+    Loading.pop();
+    init().finally(Loading.clear);
 
     return {
       lastStudyCourseId,

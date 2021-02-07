@@ -1,5 +1,6 @@
 <template>
-  <div class="course">
+  <NavBar :title="course?.title || ''" @goBack="goBack" />
+  <div class="course" v-if="course">
     <CourseHead />
     <van-tabs
       sticky
@@ -12,7 +13,7 @@
       <van-tab title="目录" name="category">
         <CourseCategory />
       </van-tab>
-      <van-tab title="简介" name="intro">
+      <van-tab title="简介" name="intro" v-if="course.description">
         <CourseIntroduce />
       </van-tab>
     </van-tabs>
@@ -22,21 +23,32 @@
 
 <script lang="ts">
 import { defineComponent, watchEffect } from 'vue';
+import { useRouter } from 'vue-router';
 import CourseIntroduce from './CourseIntroduce.vue';
 import CourseCategory from './CourseCategory.vue';
 import CourseHead from './CourseHead.vue';
+import NavBar from '@/components/common/NavBar.vue';
 import { Loading } from '@/utils/';
-import { init } from './store';
+import { init, course } from './store';
 
 export default defineComponent({
   props: ['id'],
-  components: { CourseHead, CourseIntroduce, CourseCategory },
+  components: { CourseHead, CourseIntroduce, CourseCategory, NavBar },
   setup(props) {
+    const router = useRouter();
+
+    const goBack = () => router.replace('/');
+
     watchEffect(async () => {
-      Loading.pop();
-      await init(props.id);
-      Loading.clear();
+      try {
+        Loading.pop();
+        await init(props.id);
+      } finally {
+        Loading.clear();
+      }
     });
+
+    return { course, goBack };
   },
 });
 </script>

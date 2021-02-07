@@ -3,14 +3,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onDeactivated, onMounted, watch, toRef } from 'vue';
+import { defineComponent, onDeactivated, onMounted } from 'vue';
 import { highlightIfNeed, renderMathIfNeed } from '@/utils/';
 import { article } from './store';
 
 export default defineComponent({
   setup() {
     let interval: NodeJS.Timeout;
-    const storageKey = () => `article_${article.id}_log`;
+    const storageKey = () => `article_${article.value.id}_log`;
 
     const savingStudyRecord = () => {
       const scrollingElement = document.scrollingElement;
@@ -36,19 +36,18 @@ export default defineComponent({
       }
     };
 
-    const contentEl = document.createElement('article');
-    contentEl.id = 'article-content';
-
-    watch(toRef(article, 'content'), (v) => {
-      contentEl.innerHTML = v;
+    onMounted(() => {
+      const contentEl = document.getElementById('article-content');
+      if (!contentEl) return;
+      // replcace 去除Math区域内的html标签，使katex能正确识别
+      contentEl.innerHTML =
+        article.value?.content?.replace(/\${2}[\w\W]+?\${2}/g, (match) =>
+          match.replace(/<[^>]+>/g, '')
+        ) || '';
       turnToLastStudyPosition();
       savingStudyRecord();
       highlightIfNeed(contentEl);
       renderMathIfNeed(contentEl);
-    });
-
-    onMounted(() => {
-      document.getElementById('article-content')?.replaceWith(contentEl);
     });
 
     onDeactivated(stopSavingStudyInfo);

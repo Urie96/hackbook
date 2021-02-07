@@ -1,10 +1,12 @@
 <template>
-  <NavBar :title="article.title" @goBack="goBack" />
-  <div class="main">
+  <NavBar :title="article?.title || ''" @goBack="goBack" />
+  <div class="main" v-if="article">
     <div class="title">
       {{ article.title }}
     </div>
-    <div class="info">{{ article.publishDate }} {{ course.teacherName }}</div>
+    <div class="info">
+      {{ article.publishDate }} {{ article.section.course.teacherName }}
+    </div>
     <ArticleContent />
     <ArticleCommentList />
     <back-to-top />
@@ -18,7 +20,7 @@ import ArticleContent from './ArticleContent.vue';
 import ArticleCommentList from './ArticleCommentList.vue';
 import NavBar from '@/components/common/NavBar.vue';
 import { Loading } from '@/utils/';
-import { init, course, article } from './store';
+import { init, article } from './store';
 
 export default defineComponent({
   props: ['id'],
@@ -26,14 +28,9 @@ export default defineComponent({
   setup(props) {
     const router = useRouter();
 
-    watchEffect(async () => {
-      Loading.pop();
-      await init(props.id);
-      Loading.clear();
-    });
-
     const goBack = () => {
-      if (course.id) {
+      const course = article.value?.section?.course;
+      if (course?.id) {
         router.replace({
           name: 'course',
           params: { id: course.id },
@@ -43,7 +40,16 @@ export default defineComponent({
       }
     };
 
-    return { course, article, goBack };
+    watchEffect(async () => {
+      try {
+        Loading.pop();
+        await init(props.id);
+      } finally {
+        Loading.clear();
+      }
+    });
+
+    return { article, goBack };
   },
 });
 </script>

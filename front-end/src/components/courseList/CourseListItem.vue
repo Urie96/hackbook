@@ -26,7 +26,7 @@
             <span class="buy-count">{{ course.purchasedCount }}人购买</span>
             <span class="study">
               <i class="iconfont icon-Loading spin" v-if="!course.done"></i>
-              {{ lastStudy ? '继续学习' : '学习' }}
+              {{ isLastStudy ? '继续学习' : '学习' }}
               <i class="iconfont icon-arrow-right"></i>
             </span>
           </div>
@@ -67,10 +67,11 @@ import {
   dislikeCourse,
   cancelDislikeCourse,
   courses,
+  lastStudyCourseId,
 } from './store';
 
 export default defineComponent({
-  props: ['index', 'lastStudy'],
+  props: ['index'],
   components: { Card },
   setup(props) {
     const course = courses.value[props.index] as Course;
@@ -83,21 +84,22 @@ export default defineComponent({
       });
     };
 
+    const isLastStudy = computed(() => course.id === lastStudyCourseId.value);
     const isFavorite = computed(() => course.userTend === CourseTendType.LIKE);
     const isDislike = computed(
       () => course.userTend === CourseTendType.DISLIKE
     );
     const buttonIsDisable = computed(() => isFavorite.value || isDislike.value);
-    const like = () => likeCourse(course);
+    const like = () => likeCourse(course.id);
     const cancelLike = (event: Event) => {
       event.stopPropagation();
       // event.cancelBubble = true;
-      cancelLikeCourse(course);
+      cancelLikeCourse(course.id);
     };
-    const dislike = () => dislikeCourse(course);
+    const dislike = () => dislikeCourse(course.id);
     const cancelDislike = (event: Event) => {
       event.stopPropagation();
-      cancelDislikeCourse(course);
+      cancelDislikeCourse(course.id);
     };
 
     return {
@@ -110,6 +112,7 @@ export default defineComponent({
       buttonIsDisable,
       routeToThisCourse,
       course,
+      isLastStudy,
     };
   },
 });

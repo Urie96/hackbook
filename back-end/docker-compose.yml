@@ -2,10 +2,12 @@ version: "3.5"
 
 services:
   back:
-    build: ./back-end
+    build: .
     container_name: "hackbook-back"
+    ports:
+      - 10000:10000
     environment:
-      - PORT=8080
+      - PORT=10000
       - SSO=https://sso.sweetlove.top
       - JWT_SECRET=Fwet)9243?
       - TYPEORM_HOST=mysql

@@ -3,7 +3,7 @@
 start: .make/started
 	@echo back end done
 
-.make/started: node_modules $(shell find ./src -type f -print)
+.make/started: node_modules $(shell find ./src -type f -print) docker-compose.yml Dockerfile
 	docker-compose up -d
 	touch .make/started
 

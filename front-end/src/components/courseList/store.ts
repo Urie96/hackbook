@@ -1,6 +1,6 @@
 import { watchEffect, ref } from 'vue';
 import { getAllCourses, addUserTend, deleteUserTend } from '@/api';
-import { Notify } from '@/utils/';
+import { Message } from '@/utils/';
 import { CourseTendType } from '@/types/index.d.ts';
 
 export const courses = ref<Course[]>([]);
@@ -14,6 +14,13 @@ const shuffle = (array: any[]) => {
   }
 };
 
+export const init = async () => {
+  courses.value = [];
+  const data = await getAllCourses();
+  shuffle(data);
+  courses.value = data;
+};
+
 const getPriority = (course: Course) => {
   let s = 0;
   if (searchedCourseIds.value.includes(course.id)) s += 10000;
@@ -23,51 +30,47 @@ const getPriority = (course: Course) => {
   return s;
 };
 
-export const init = async () => {
-  courses.value = [];
-  const data = await getAllCourses();
-  shuffle(data);
-  courses.value = data;
-};
-
 watchEffect(() => {
   courses.value.sort((a, b) => getPriority(b) - getPriority(a));
 });
 
-export const likeCourse = async (course: Course) => {
-  course.userTend = CourseTendType.LIKE;
+const findCourseById = (courseId: string) =>
+  courses.value.find((c) => c.id === courseId);
+
+export const likeCourse = async (courseId: string) => {
+  findCourseById(courseId).userTend = CourseTendType.LIKE;
   await addUserTend({
-    courseId: course.id,
+    courseId,
     type: CourseTendType.LIKE,
   } as CourseTend);
-  Notify({ type: 'success', message: '收藏成功' });
+  Message.success('收藏成功');
 };
 
-export const dislikeCourse = async (course: Course) => {
-  course.userTend = CourseTendType.DISLIKE;
+export const dislikeCourse = async (courseId: string) => {
+  findCourseById(courseId).userTend = CourseTendType.DISLIKE;
   await addUserTend({
-    courseId: course.id,
+    courseId,
     type: CourseTendType.DISLIKE,
   } as CourseTend);
-  Notify({ type: 'success', message: '已添加到不喜欢' });
+  Message.success('已添加到不喜欢');
 };
 
-export const cancelLikeCourse = async (course: Course) => {
-  course.userTend = undefined;
-  const success = await deleteUserTend(course.id);
+export const cancelLikeCourse = async (courseId: string) => {
+  findCourseById(courseId).userTend = undefined;
+  const success = await deleteUserTend(courseId);
   if (success) {
-    Notify({ type: 'warning', message: '取消收藏成功' });
+    Message.success('取消收藏成功');
   } else {
-    Notify({ type: 'danger', message: 'has bug' });
+    Message.fail('has bug');
   }
 };
 
-export const cancelDislikeCourse = async (course: Course) => {
-  course.userTend = undefined;
-  const success = await deleteUserTend(course.id);
+export const cancelDislikeCourse = async (courseId: string) => {
+  findCourseById(courseId).userTend = undefined;
+  const success = await deleteUserTend(courseId);
   if (success) {
-    Notify({ type: 'warning', message: '已移除不喜欢' });
+    Message.success('已移除不喜欢');
   } else {
-    Notify({ type: 'danger', message: 'has bug' });
+    Message.fail('has bug');
   }
 };

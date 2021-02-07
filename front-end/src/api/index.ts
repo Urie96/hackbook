@@ -8,7 +8,7 @@ import {
   commentFragment,
   courseTendFragment,
 } from './fragment';
-import { Notify } from '../utils';
+import { Message } from '@/utils';
 
 const request = async <T = any, V = any>(
   query: DocumentNode,
@@ -17,7 +17,7 @@ const request = async <T = any, V = any>(
   try {
     return await graphqlRequest<T, V>('/graphql', query, variables);
   } catch (error) {
-    console.error(JSON.stringify(error, undefined, 2));
+    Message.fail(error.response?.errors?.[0]?.message);
     throw error;
   }
 };
@@ -37,6 +37,7 @@ export const getAllCourses = async () => {
 };
 
 export const addUserTend = async (courseTend: CourseTend) => {
+  if (!window.isAuthenticated) await login();
   const { addCourseTend } = await request(
     gql`
       mutation($courseId: String!, $type: String!) {
@@ -53,6 +54,7 @@ export const addUserTend = async (courseTend: CourseTend) => {
 };
 
 export const deleteUserTend = async (courseId: string) => {
+  if (!window.isAuthenticated) await login();
   const { deleteCourseTend } = await request(
     gql`
       mutation($courseId: String!) {
@@ -112,7 +114,12 @@ export const getArticleById = async (id: string) => {
   return article as Article;
 };
 
-export const login = async (loginReturnTo: string) => {
+const sleepForever = () =>
+  new Promise((resolve) => {
+    setTimeout(resolve, 1000 * 3600 * 24 * 100);
+  });
+
+export const login = async (loginReturnTo = location.pathname) => {
   if (loginReturnTo.trim() === '') {
     throw new Error('param loginReturnTo must not be blank string');
   }
@@ -129,10 +136,12 @@ export const login = async (loginReturnTo: string) => {
       `
   );
   if (message === 'success') {
+    window.isAuthenticated = true;
     return true;
   }
   if (redirect) {
-    Notify({ type: 'warning', message: '即将重定向到登录界面' });
+    Message.warning('正在尝试自动登录');
     window.location.href = redirect;
+    await sleepForever();
   }
 };

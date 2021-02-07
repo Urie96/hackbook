@@ -5,7 +5,7 @@
     <divider />
 
     <ArticleCommentListItem
-      v-for="comment of comments"
+      v-for="comment of article.comments"
       :key="comment.id"
       v-bind="comment"
     />
@@ -14,13 +14,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { article } from './store';
 import ArticleCommentListItem from './ArticleCommentListItem.vue';
-import { comments } from './store';
 
 export default defineComponent({
   components: { ArticleCommentListItem },
   setup() {
-    return { comments };
+    return { article };
   },
 });
 </script>

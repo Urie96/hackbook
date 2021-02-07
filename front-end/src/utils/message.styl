@@ -18,21 +18,26 @@
 
 #message-container
   position fixed
-  top $navbarHeight + 1rem
+  top 5rem
   left 0
   right 0
   z-index 100
   text-align center
+  display flex
+  display -webkit-flex
+  flex-flow column nowrap
+  align-items center
 
   .message
-    display inline-block
-    padding 8px 10px
+    display flex
+    display -webkit-flex
+    align-items center
+    padding 0.6rem 1rem
     border-radius 3px
-    box-shadow 0 0 10px 0 var(--box-shadow-color, #bbb)
-    background var(--bgcolor, #fff)
+    box-shadow var(--box-shadow, 0 0 10px 0 #bbb)
+    background var(--background-color-sub, #fff)
     color var(--text-color, #333)
-    font-size 14px
-    transition height 0.2s ease-in-out, margin 0.2s ease-in-out
+    font-size 1.1rem
 
     &.move-in
       animation message-move-in 0.3s ease-in-out
@@ -42,6 +47,5 @@
       animation-fill-mode forwards
 
     svg
-      position relative
-      bottom -0.125em
       margin-right 5px
+      width 20px
