@@ -36,6 +36,12 @@ export default defineComponent({
       }
     };
 
+    const removeInlineStyle = (el: HTMLElement) => {
+      Array.from(el.getElementsByTagName('*')).forEach((e) =>
+        e.removeAttribute('style')
+      );
+    };
+
     onMounted(() => {
       const contentEl = document.getElementById('article-content');
       if (!contentEl) return;
@@ -44,6 +50,7 @@ export default defineComponent({
         article.value?.content?.replace(/\${2}[\w\W]+?\${2}/g, (match) =>
           match.replace(/<[^>]+>/g, '')
         ) || '';
+      removeInlineStyle(contentEl);
       turnToLastStudyPosition();
       savingStudyRecord();
       highlightIfNeed(contentEl);

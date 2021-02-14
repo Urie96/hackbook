@@ -15,10 +15,7 @@ const saveStudyInfo = () => {
 export const init = async (articleId: string) => {
   article.value = null;
   const data = await getArticleById(articleId);
-  // replcace 去除Math区域内的html标签，使katex能正确识别
-  data.content = data.content.replace(/\${2}[\w\W]+?\${2}/g, (match) =>
-    match.replace(/<[^>]+>/g, '')
-  );
+  
   article.value = data;
   saveStudyInfo();
 };
