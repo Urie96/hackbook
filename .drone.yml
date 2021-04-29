@@ -17,9 +17,6 @@ steps:
     commands:
       - cd /root/hackbook
       - git pull gogs master
-
-  - name: build
-    commands:
       - make
 
 trigger:
