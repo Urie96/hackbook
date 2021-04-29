@@ -1,0 +1,29 @@
+kind: pipeline
+type: ssh
+name: default
+
+clone:
+  disable: true
+
+server:
+  host:
+    from_secret: ssh_ip
+  user: root
+  password:
+    from_secret: ssh_password
+
+steps:
+  - name: clone
+    commands:
+      - cd /root/hackbook
+      - git pull gogs master
+
+  - name: build
+    commands:
+      - make
+
+trigger:
+  branch:
+    - master
+  event:
+    - push
