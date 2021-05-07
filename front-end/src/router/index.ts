@@ -35,34 +35,6 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/blue',
-    component: Blue,
-    children: [
-      {
-        path: 'new',
-        component: () =>
-          import(
-            /* webpackChunkName: 'bl' */ '@/components/blue/NewPublish.vue'
-          ),
-        meta: {
-          requireAuth: true,
-        },
-      },
-      {
-        path: 'new/:url',
-        props: true,
-        name: 'newImgs',
-        component: () =>
-          import(
-            /* webpackChunkName: 'bl' */ '@/components/blue/NewPublishImgs.vue'
-          ),
-        meta: {
-          requireAuth: true,
-        },
-      },
-    ],
-  },
-  {
     path: '/:pathMatch(.*)*',
     component: NotFound,
   },
