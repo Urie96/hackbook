@@ -25,7 +25,8 @@ export class UserResolver {
       return { message: 'success' };
     }
     try {
-      const code = ctx.request.query.code;
+      let code = ctx.request.query.code;
+      if (Array.isArray(code)) code = code[0];
       if (!code) throw new Error('query code required');
       // login by sso service
       const { id } = await verifyCode(code);
