@@ -17,7 +17,17 @@ steps:
     commands:
       - cd /root/hackbook
       - git pull gogs master
+      - echo $JWT_SECRET
       - make
+    environment:
+      JWT_SECRET:
+        from_secret: JWT_SECRET
+      TYPEORM_HOST:
+        from_secret: TYPEORM_HOST
+      TYPEORM_PASSWORD:
+        from_secret: TYPEORM_PASSWORD
+      TYPEORM_USERNAME:
+        from_secret: urie
 
 trigger:
   branch:
