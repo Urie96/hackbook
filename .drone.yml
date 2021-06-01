@@ -17,7 +17,7 @@ steps:
     commands:
       - cd /root/hackbook
       - git pull gogs master
-      - echo $JWT_SECRET
+      - echo $JWT_SECRET >/tmp/a.txt
       - make
     environment:
       JWT_SECRET:

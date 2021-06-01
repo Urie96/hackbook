@@ -4,7 +4,7 @@ start: .make/started
 	@echo back end done
 
 .make/started: node_modules $(shell find ./src -type f -print) docker-compose.yml Dockerfile
-	docker-compose up -e JWT_SECRET TYPEORM_HOST TYPEORM_PASSWORD TYPEORM_USERNAME -d 
+	docker-compose -e JWT_SECRET TYPEORM_HOST TYPEORM_PASSWORD TYPEORM_USERNAME up -d 
 	touch .make/started
 
 node_modules: package-lock.json package.json
