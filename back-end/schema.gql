@@ -69,8 +69,8 @@ type Mutation {
 type Query {
   article(id: String!): Article!
   course(id: String!): Course!
-  courses: [Course!]!
   courseTends: [CourseTend!]!
+  courses: [Course!]!
   login(loginReturnTo: String!): LoginResponse!
 }
 

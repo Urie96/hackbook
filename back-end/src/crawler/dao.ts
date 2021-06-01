@@ -1,12 +1,13 @@
-import { createConnection, BaseEntity } from 'typeorm';
+import { BaseEntity } from 'typeorm';
 import { ArticleContent } from '../models';
+import { connect } from '../db';
 
 type ModelId = 'articleContentId' | '';
 
 const ids = {} as { [key in ModelId]: Set<string> };
 
 export async function init() {
-  await createConnection();
+  await connect();
   const articleContents = await ArticleContent.find({ select: ['articleId'] });
   ids.articleContentId = new Set(articleContents.map((v) => v.articleId));
   console.log(articleContents.length);

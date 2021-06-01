@@ -2,11 +2,11 @@ import 'reflect-metadata';
 import Koa from 'koa';
 import { ApolloServer } from 'apollo-server-koa';
 import { buildSchema } from 'type-graphql';
-import { createConnection } from 'typeorm';
 import { authChecker, userParser } from './auth';
+import { connect } from './db';
 
 async function bootstrap() {
-  await createConnection();
+  await connect();
 
   const schema = await buildSchema({
     authChecker,
