@@ -25,8 +25,7 @@ steps:
         from_secret: TYPEORM_HOST
       TYPEORM_PASSWORD:
         from_secret: TYPEORM_PASSWORD
-      TYPEORM_USERNAME:
-        from_secret: hackbook
+      TYPEORM_USERNAME: urie
 
 trigger:
   branch:
