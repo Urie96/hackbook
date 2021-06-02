@@ -52,13 +52,13 @@ router.beforeEach(async (to) => {
   Loading.clear();
 });
 
-const visotorLogin = async () => {
-  const token = window.location.href.match(/[?&]visitor=([\w+/=]+)(&|$)/)?.[1];
+const guestLogin = async () => {
+  const token = window.location.href.match(/[?&]guest=([\w+/=]+)(&|$)/)?.[1];
   if (token) {
     await visit(token);
   }
 };
 
-visotorLogin();
+guestLogin();
 
 export default router;
