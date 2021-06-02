@@ -140,19 +140,19 @@ export const login = async (loginReturnTo = location.pathname) => {
     return true;
   }
   if (redirect) {
-    Message.warning('正在尝试自动登录');
+    Message.warning('trying to log in automatically');
     window.location.href = redirect;
     await sleepForever();
   }
 };
 
-export const visit = async (token: string) => {
+export const guestLogin = async (token: string) => {
   const {
-    visit: { message },
+    guestLogin: { message },
   } = await request(
     gql`
       {
-        visit(token: "${token}"){
+        guestLogin(token: "${token}"){
           message
         }
       }
@@ -161,7 +161,9 @@ export const visit = async (token: string) => {
   if (message === 'success') {
     Message.success('successfully logged in as a guest');
     window.isAuthenticated = true;
+    return true;
   } else {
     Message.warning(`login as a guest failed: ${message}`);
+    return false;
   }
 };

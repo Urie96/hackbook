@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { login, visit } from '@/api';
+import { login, guestLogin } from '@/api';
 import Courses from '@/views/Courses.vue';
 import NotFound from '@/views/NotFound.vue';
 import CourseList from '@/components/courseList/CourseList.vue';
@@ -44,21 +44,25 @@ const router = createRouter({
   routes,
 });
 
+const token = window.location.href.match(/[?&]guest=([\w+/=]+)(&|$)/)?.[1]; // guest
+if (token) {
+  window.sessionStorage.setItem('guest', token);
+}
+
 router.beforeEach(async (to) => {
-  if (to.meta.requireAuth && !window.isAuthenticated) await login(to.fullPath);
+  if (to.meta.requireAuth && !window.isAuthenticated) {
+    const token = window.sessionStorage.getItem('guest');
+    window.sessionStorage.removeItem('guest');
+    if (token && !(await guestLogin(token))) {
+      return false; // 游客登录失败，停留原页面
+    } else {
+      await login(to.fullPath);
+    }
+  }
   if (to.meta.title) {
     document.title = to.meta.title;
   }
   Loading.clear();
 });
-
-const guestLogin = async () => {
-  const token = window.location.href.match(/[?&]guest=([\w+/=]+)(&|$)/)?.[1];
-  if (token) {
-    await visit(token);
-  }
-};
-
-guestLogin();
 
 export default router;

@@ -8,7 +8,8 @@
     "start": "NODE_ENV=production ts-node --files ./src/index.ts",
     "fetch:lagou": "ts-node --files ./src/crawler/fetch-lagou.ts",
     "fetch:geek": "ts-node --files ./src/crawler/fetch-geek.ts",
-    "gen:type": "tsc -d ./src/models/index.ts --outDir ./@types; find ./@types -name '*.js' | xargs rm"
+    "gen:type": "tsc -d ./src/models/index.ts --outDir ./@types; find ./@types -name '*.js' | xargs rm",
+    "gen:guest":"ts-node ./src/utils/gen-guest.ts"
   },
   "keywords": [],
   "author": "",

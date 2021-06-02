@@ -71,8 +71,8 @@ type Query {
   course(id: String!): Course!
   courseTends: [CourseTend!]!
   courses: [Course!]!
+  guestLogin(token: String!): LoginResponse!
   login(loginReturnTo: String!): LoginResponse!
-  visit(token: String!): LoginResponse!
 }
 
 type Section {

@@ -43,16 +43,13 @@ export class UserResolver {
   }
 
   @Query(() => LoginResponse)
-  async visit(@Arg('token') token: string, @Ctx() ctx: Koa.Context) {
-    console.log(token);
+  async guestLogin(@Arg('token') token: string, @Ctx() ctx: Koa.Context) {
     try {
       const expiresIn = Number(decrypt(token)) * 1000 - new Date().valueOf();
       if (expiresIn < 0) {
         return { message: 'expired visitor token' };
       }
-      ctx.cookies.set('token', makeToken({} as User, String(expiresIn)), {
-        maxAge: expiresIn,
-      });
+      ctx.cookies.set('token', makeToken({} as User, String(expiresIn)));
       return { message: 'success' };
     } catch (error) {
       console.log(error.message);
