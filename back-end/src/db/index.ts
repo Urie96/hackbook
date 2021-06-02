@@ -8,7 +8,7 @@ export const connect = async () => {
     username: process.env['TYPEORM_USERNAME'] || 'root',
     password: process.env['TYPEORM_PASSWORD'],
     synchronize: true,
-    logging: false,
+    logging: true,
     entities: ['src/models/**/*.ts'],
   });
 };

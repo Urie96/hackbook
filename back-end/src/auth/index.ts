@@ -4,6 +4,7 @@ import http from 'http';
 import { JWT_SECRET, SSO_VERIFYCODE } from '../constants';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
+import { UserRole } from '../models/Enum';
 
 export const authChecker: AuthChecker<Koa.Context, Enum.UserRole> = (
   { context },
@@ -14,16 +15,19 @@ export const userParser = async (ctx: Koa.Context, next: any) => {
   const token = ctx.cookies.get('token');
   if (token) {
     const { userId } = jwt.verify(token, JWT_SECRET) as any;
-    const user = await User.findOne({ id: userId });
+    let user = new User();
+    if (userId) {
+      user = await User.findOne({ id: userId });
+    } else {
+      user.role = UserRole.VISITOR;
+    }
     ctx.user = user;
   }
   await next();
 };
 
-export const makeToken = (user: User) =>
-  jwt.sign({ userId: user.id }, JWT_SECRET, {
-    expiresIn: '50d',
-  });
+export const makeToken = (user: User, expiresIn = '50d') =>
+  jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn });
 
 export const verifyCode = async (code: string) => {
   const url = new URL(SSO_VERIFYCODE);

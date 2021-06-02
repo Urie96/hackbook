@@ -40,7 +40,7 @@ export const addUserTend = async (courseTend: CourseTend) => {
   if (!window.isAuthenticated) await login();
   const { addCourseTend } = await request(
     gql`
-      mutation($courseId: String!, $type: String!) {
+      mutation ($courseId: String!, $type: String!) {
         addCourseTend(courseId: $courseId, type: $type) {
           ...courseTend
         }
@@ -57,7 +57,7 @@ export const deleteUserTend = async (courseId: string) => {
   if (!window.isAuthenticated) await login();
   const { deleteCourseTend } = await request(
     gql`
-      mutation($courseId: String!) {
+      mutation ($courseId: String!) {
         deleteCourseTend(courseId: $courseId)
       }
     `,
@@ -143,5 +143,25 @@ export const login = async (loginReturnTo = location.pathname) => {
     Message.warning('正在尝试自动登录');
     window.location.href = redirect;
     await sleepForever();
+  }
+};
+
+export const visit = async (token: string) => {
+  const {
+    visit: { message },
+  } = await request(
+    gql`
+      {
+        visit(token: "${token}"){
+          message
+        }
+      }
+      `
+  );
+  if (message === 'success') {
+    Message.success('successfully logged in as a guest');
+    window.isAuthenticated = true;
+  } else {
+    Message.warning(`login as a guest failed: ${message}`);
   }
 };

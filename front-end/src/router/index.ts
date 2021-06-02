@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { login } from '@/api';
+import { login, visit } from '@/api';
 import Courses from '@/views/Courses.vue';
 import NotFound from '@/views/NotFound.vue';
-import Blue from '@/views/Blue.vue';
 import CourseList from '@/components/courseList/CourseList.vue';
 import Course from '@/components/course/Course.vue';
 import Article from '@/components/article/Article.vue';
@@ -52,5 +51,14 @@ router.beforeEach(async (to) => {
   }
   Loading.clear();
 });
+
+const visotorLogin = async () => {
+  const token = window.location.href.match(/[?&]visitor=([\w+/=]+)(&|$)/)?.[1];
+  if (token) {
+    await visit(token);
+  }
+};
+
+visotorLogin();
 
 export default router;

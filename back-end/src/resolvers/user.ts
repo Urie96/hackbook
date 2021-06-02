@@ -2,6 +2,7 @@ import { Resolver, Query, Arg, Ctx, ObjectType, Field } from 'type-graphql';
 import { User } from '../models/User';
 import { makeToken, verifyCode } from '../auth/';
 import { SSO_AUTH } from '../constants/';
+import { decrypt } from '../utils';
 
 @ObjectType()
 class LoginResponse {
@@ -38,6 +39,24 @@ export class UserResolver {
       const redirectTo = addQuery(ctx.href, ctx.request.body);
       const redirect = addQuery(SSO_AUTH, { redirectTo });
       return { message, redirect };
+    }
+  }
+
+  @Query(() => LoginResponse)
+  async visit(@Arg('token') token: string, @Ctx() ctx: Koa.Context) {
+    console.log(token);
+    try {
+      const expiresIn = Number(decrypt(token)) * 1000 - new Date().valueOf();
+      if (expiresIn < 0) {
+        return { message: 'expired visitor token' };
+      }
+      ctx.cookies.set('token', makeToken({} as User, String(expiresIn)), {
+        maxAge: expiresIn,
+      });
+      return { message: 'success' };
+    } catch (error) {
+      console.log(error.message);
+      return { message: 'invalid visitor token' };
     }
   }
 }
