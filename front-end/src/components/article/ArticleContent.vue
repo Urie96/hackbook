@@ -4,7 +4,11 @@
 
 <script lang="ts">
 import { defineComponent, onDeactivated, onMounted } from 'vue';
-import { highlightIfNeed, renderMathIfNeed } from '@/utils/';
+import {
+  highlightIfNeed,
+  renderMathIfNeed,
+  makeChildImagePreviewable,
+} from '@/utils/';
 import { article } from './store';
 
 export default defineComponent({
@@ -55,6 +59,7 @@ export default defineComponent({
       savingStudyRecord();
       highlightIfNeed(contentEl);
       renderMathIfNeed(contentEl);
+      makeChildImagePreviewable(contentEl);
     });
 
     onDeactivated(stopSavingStudyInfo);

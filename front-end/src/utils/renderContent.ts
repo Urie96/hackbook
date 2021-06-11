@@ -1,3 +1,4 @@
+import { ImagePreview } from 'vant';
 import { importScript, Script } from '.';
 
 export const highlightIfNeed = async (dom: HTMLElement) => {
@@ -20,4 +21,27 @@ export const renderMathIfNeed = async (dom: HTMLElement) => {
     ],
   };
   renderMathInElement(dom, option);
+};
+
+export const makeChildImagePreviewable = (el: HTMLElement) => {
+  Array.from(el.getElementsByTagName('img')).forEach((e) => {
+    e.onclick = () => {
+      imagePreview(e.src);
+    };
+  });
+};
+
+const imagePreview = (image: string) => {
+  const viewport = document.querySelector(
+    'meta[name=viewport]'
+  ) as HTMLMetaElement;
+  const originContent = viewport.content;
+  viewport.content = 'width=device-width,initial-scale=1.0';
+  ImagePreview({
+    images: [image],
+    showIndex: false,
+    onClose: () => {
+      viewport.content = originContent;
+    },
+  });
 };

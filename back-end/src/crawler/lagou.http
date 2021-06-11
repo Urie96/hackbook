@@ -1,0 +1,12 @@
+@token=7fdf0b2967573fcbb9ef1fa613873fde81701a47799d8f2caa4233631bee13c3
+
+GET https://gate.lagou.com/v1/neirong/edu/homepage/getCourseList?deviceSourceCode=2
+x-l-req-header: {deviceType:1}
+gate_login_token: {{token}}
+
+###
+// @name ArticleContent
+GET https://gate.lagou.com/v1/neirong/kaiwu/getCourseLessonDetail
+    ?lessonId=6353
+x-l-req-header: {deviceType:1}
+gate_login_token: {{token}}

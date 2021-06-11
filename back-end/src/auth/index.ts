@@ -14,14 +14,18 @@ export const authChecker: AuthChecker<Koa.Context, Enum.UserRole> = (
 export const userParser = async (ctx: Koa.Context, next: any) => {
   const token = ctx.cookies.get('token');
   if (token) {
-    const { userId } = jwt.verify(token, JWT_SECRET) as any;
-    let user = new User();
-    if (userId) {
-      user = await User.findOne({ id: userId });
-    } else {
-      user.role = UserRole.VISITOR;
+    try {
+      const { userId } = jwt.verify(token, JWT_SECRET) as any;
+      let user = new User();
+      if (userId) {
+        user = await User.findOne({ id: userId });
+      } else {
+        user.role = UserRole.VISITOR;
+      }
+      ctx.user = user;
+    } catch ({ message }) {
+      console.log(message);
     }
-    ctx.user = user;
   }
   await next();
 };

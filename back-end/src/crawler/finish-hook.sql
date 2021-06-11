@@ -11,7 +11,9 @@ WHERE
 UPDATE
   course
 SET
-  course.done = 1;
+  course.done = 1
+WHERE
+  1 = 1;
 
 -- 3
 UPDATE

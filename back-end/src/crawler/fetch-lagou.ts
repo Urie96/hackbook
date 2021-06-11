@@ -12,7 +12,7 @@ import { init, has, save } from './dao';
 const header = {
   'x-l-req-header': '{deviceType:1}',
   cookie:
-    'gate_login_token=d527dc38cff1ebaa7821b5f9bd6bd93b820e588d9b8aa0eb7db6e00028296c62',
+    'gate_login_token=7fdf0b2967573fcbb9ef1fa613873fde81701a47799d8f2caa4233631bee13c3',
 };
 
 const toLagouId = (id: any) => (id ? 'L' + id : undefined);
@@ -27,6 +27,7 @@ async function saveCourseList() {
     'https://gate.lagou.com/v1/neirong/edu/homepage/getCourseList?deviceSourceCode=2'
   );
   const courseList = res.body.content.courseCardList[0].courseList as any[];
+  console.log('拉勾现在课程数：' + courseList.length);
   courseList.forEach((c) => {
     const course = partial(
       c,
@@ -41,8 +42,8 @@ async function saveCourseList() {
     course.purchasedCount = c.pruchasedCount.match(/[\d.w]+/)?.[0] || '';
     course.price = Number(c.price.match(/\d+/)?.[0]);
     save(course);
-    // saveDecorateDescription(c.id);
-    // saveCourseLessons(c.id);
+    saveDecorateDescription(c.id);
+    saveCourseLessons(c.id);
   });
 }
 
@@ -62,7 +63,8 @@ async function saveDecorateDescription(courseID: number) {
         content += `<img src="${v.content[0]}">`;
         break;
       case 'teacher':
-        content += JSON.parse(v.content).description;
+        // console.log(v.content);
+        content += JSON.parse(v.content[0]).description;
         break;
       default:
         content += v.content[0];
@@ -91,7 +93,7 @@ async function saveCourseLessons(courseID) {
       article.title = a.theme;
       article.publishDate = '';
       await save(article);
-      // await saveArticleContent(article, a.id);
+      await saveArticleContent(article, a.id);
       saveLessonComments(article, courseID, a.id);
     });
   });
