@@ -10,3 +10,7 @@ start: .make/started
 node_modules: package-lock.json package.json
 	npm ci
 	touch node_modules
+
+image:
+	docker build -t hub.lubui.com/hackbook-server .
+	docker push hub.lubui.com/hackbook-server

@@ -1,4 +1,4 @@
-.PHONY: all build
+.PHONY: all build image
 
 OUTPUT_DIR=dist
 SRC_DIRS=src public
@@ -16,3 +16,7 @@ $(OUTPUT_DIR): node_modules $(SRC_FILES)
 node_modules: package-lock.json package.json
 	npm ci
 	touch node_modules
+
+image:
+	docker build -t hub.lubui.com/hackbook-web .
+	docker push hub.lubui.com/hackbook-web

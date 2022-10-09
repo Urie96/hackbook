@@ -12,7 +12,7 @@ import { init, has, save } from './dao';
 const header = {
   'x-l-req-header': '{deviceType:1}',
   cookie:
-    'gate_login_token=7fdf0b2967573fcbb9ef1fa613873fde81701a47799d8f2caa4233631bee13c3',
+    'gate_login_token=1df39077bb7b4b2793f94e3e61e2b92352e2192b87e1810b548d12abd7c7811a;',
 };
 
 const toLagouId = (id: any) => (id ? 'L' + id : undefined);
@@ -24,9 +24,9 @@ saveCourseList();
 async function saveCourseList() {
   await init();
   const res = await get(
-    'https://gate.lagou.com/v1/neirong/edu/homepage/getCourseList?deviceSourceCode=2'
+    'https://gate.lagou.com/v1/neirong/edu/homepage/more/getCourseByClassifyV2'
   );
-  const courseList = res.body.content.courseCardList[0].courseList as any[];
+  const courseList = res.body.content.courseList as any[];
   console.log('拉勾现在课程数：' + courseList.length);
   courseList.forEach((c) => {
     const course = partial(

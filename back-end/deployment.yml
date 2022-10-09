@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hackbook-server
+  labels:
+    app: hackbook-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hackbook-server
+  template:
+    metadata:
+      labels:
+        app: hackbook-server
+    spec:
+      containers:
+        - name: hackbook-server
+          image: hub.lubui.com/hackbook-server:latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: SSO
+              value: https://sso.lubui.com
+            - name: JWT_SECRET
+              value: 234dsf#%$12ge43623aad1245346gf45
+            - name: DB_HOST
+              value: '49.233.30.27'
+            - name: DB_PORT
+              value: '3306'
+            - name: DB_USERNAME
+              value: urie
+            - name: DB_PASSWORD
+              value: youling
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hackbook-server
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 4000
+  selector:
+    app: hackbook-server
+  type: ClusterIP
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hackbook-server
+spec:
+  tls:
+    secretName: tls-lubui.com
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`book.lubui.com`) && PathPrefix(`/graphql`)
+      kind: Rule
+      middlewares:
+        - name: gzip
+      services:
+        - name: hackbook-server
+          port: 80

@@ -1,4 +1,4 @@
-import path = require('path');
+import * as path from "path";
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import styleImport from 'vite-plugin-style-import';
@@ -24,13 +24,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/linguo': {
-        target: 'https://linguomm.xyz',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/linguo/, ''),
-      },
       '/graphql': {
-        target: 'http://localhost:4000',
+        target: 'https://book.lubui.com',
       },
     },
   },

@@ -12,7 +12,7 @@ import { init, has, save } from './dao';
 const header = {
   Origin: 'https://time.geekbang.org',
   Cookie:
-    'LF_ID=1622797197871-9526912-7199896; sajssdk_2015_cross_new_user=1; GCID=268eda4-a0cdc5a-957542e-4245b0f; gksskpitn=f12abf5e-ba17-4702-98c7-a7e74d008184; GRID=268eda4-a0cdc5a-957542e-4245b0f; _ga=GA1.2.1554641188.1622797198; _gid=GA1.2.380839197.1622797198; GCESS=BQUEAAAAAAkBAQcEo6AxIQQEAC8NAAYEaH90BwIECPG5YAMECPG5YAgBAwoEAAAAAAwBAQsCBQABCC.DIQAAAAAA; _gat=1; Hm_lvt_59c4ff31a9ee6263811b23eb921a5083=1622798169,1622798295,1622798432,1622798602; Hm_lpvt_59c4ff31a9ee6263811b23eb921a5083=1622798602; Hm_lvt_022f847c4e3acd44d4a2481d9187f1e6=1622798169,1622798295,1622798432,1622798602; Hm_lpvt_022f847c4e3acd44d4a2481d9187f1e6=1622798602; gk_process_ev={%22count%22:19%2C%22utime%22:1622798452462%2C%22referrer%22:%22%22%2C%22target%22:%22page_geektime_login%22%2C%22referrerTarget%22:%22page_geektime_login%22}; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%222196271%22%2C%22first_id%22%3A%22179d6402271aa1-0a88bedc672ca4-113a6054-2007040-179d6402272ae9%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E5%BC%95%E8%8D%90%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC%22%2C%22%24latest_referrer%22%3A%22https%3A%2F%2Faccount.infoq.cn%2F%22%2C%22%24latest_landing_page%22%3A%22https%3A%2F%2Ftime.geekbang.org%2F%22%7D%2C%22%24device_id%22%3A%22179d6402271aa1-0a88bedc672ca4-113a6054-2007040-179d6402272ae9%22%7D; SERVERID=3431a294a18c59fc8f5805662e2bd51e|1622798602|1622797198',
+    'gksskpitn=939cae7f-3604-4ca5-b46a-50098e46090d; sajssdk_2015_cross_new_user=1; LF_ID=1641958283766-5666122-2043241; GCID=f1148d8-e288e25-edf9c3a-7163c28; GRID=f1148d8-e288e25-edf9c3a-7163c28; _ga=GA1.2.1861476544.1641958284; _gid=GA1.2.336246817.1641958284; _gat=1; GCESS=BgcEUohv_Q0BAQYEIZXvDwwBAQEIL4MhAAAAAAALAgYAAwSXS95hBAQALw0ACgQAAAAAAgSXS95hCAEDCQEBBQQAAAAA; SERVERID=1fa1f330efedec1559b3abbcb6e30f50|1641958296|1641958283; Hm_lvt_59c4ff31a9ee6263811b23eb921a5083=1641958284,1641958297; Hm_lpvt_59c4ff31a9ee6263811b23eb921a5083=1641958297; Hm_lvt_022f847c4e3acd44d4a2481d9187f1e6=1641958284,1641958297; Hm_lpvt_022f847c4e3acd44d4a2481d9187f1e6=1641958297; gk_process_ev={%22count%22:4%2C%22target%22:%22%22%2C%22utime%22:1641958285940%2C%22referrer%22:%22https://time.geekbang.org/dashboard/course%22%2C%22referrerTarget%22:%22page_geektime_login%22}; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%222196271%22%2C%22first_id%22%3A%2217e4c57198ee5b-08ba75eca7ebf4-1d326253-2007040-17e4c57198fcc2%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E5%BC%95%E8%8D%90%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC%22%2C%22%24latest_referrer%22%3A%22https%3A%2F%2Faccount.infoq.cn%2F%22%2C%22%24latest_landing_page%22%3A%22https%3A%2F%2Ftime.geekbang.org%2Fdashboard%2Fcourse%22%7D%2C%22%24device_id%22%3A%2217e4c57198ee5b-08ba75eca7ebf4-1d326253-2007040-17e4c57198fcc2%22%7D',
 };
 
 const toGeekId = (id: any) => (id ? 'G' + id : undefined);
@@ -22,7 +22,7 @@ const { post } = requester(header);
 main();
 
 const phones = [
-  13890394108, 17713541424, 17828228827, 15196473896, 15732933533, 18228580670,
+  17713541424, 17828228827, 15196473896, 15732933533, 18228580670,
   13875080072, 17336575801, 15623836152, 13114516778, 15927916425, 18975667456,
 ];
 
@@ -34,6 +34,7 @@ async function main() {
     label_id: 0,
     type: 1,
   });
+  console.log(data.body.data.list);
   data.body.data.list
     // .slice(2, 3)
     .map((v) => v.pid)

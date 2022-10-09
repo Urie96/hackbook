@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hackbook-web
+  labels:
+    app: hackbook-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hackbook-web
+  template:
+    metadata:
+      labels:
+        app: hackbook-web
+    spec:
+      containers:
+        - name: hackbook-web
+          image: hub.lubui.com/hackbook-web:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hackbook-web
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: hackbook-web
+  type: ClusterIP
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hackbook-web
+spec:
+  tls:
+    secretName: tls-lubui.com
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`book.lubui.com`) && !PathPrefix(`/graphql`)
+      kind: Rule
+      services:
+        - name: hackbook-web
+          port: 80

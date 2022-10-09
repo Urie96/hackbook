@@ -36,7 +36,7 @@ export class UserResolver {
       ctx.redirect(loginReturnTo);
       return { message: 'redirect to original page' };
     } catch ({ message }) {
-      const redirectTo = addQuery(ctx.href, ctx.request.body);
+      const redirectTo = addQuery(ctx.href.replace("http://", "https://"), ctx.request.body);
       const redirect = addQuery(SSO_AUTH, { redirectTo });
       return { message, redirect };
     }

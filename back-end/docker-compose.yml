@@ -2,14 +2,15 @@ version: '3.5'
 
 services:
   back:
-    build: .
+    image: hub.lubui.com/hackbook-server
     container_name: 'hackbook-back'
     ports:
-      - 10000:10000
+      - '8085:10000'
     environment:
       - PORT=10000
-      - SSO=https://sso.sweetlove.top
-      - JWT_SECRET=${JWT_SECRET}
-      - TYPEORM_HOST=${TYPEORM_HOST}
-      - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
-      - TYPEORM_USERNAME=${TYPEORM_USERNAME}
+      - SSO=https://sso.lubui.com
+      - JWT_SECRET=12ge43623aad1245346gf456
+      - DB_HOST=49.233.30.27
+      - DB_PASSWORD=youling
+      - DB_USERNAME=urie
+      - DB_PORT=3306
